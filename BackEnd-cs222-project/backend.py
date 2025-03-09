@@ -21,3 +21,4 @@ minors_required = {
 
 for key in minors_required:
     #if inputed classes equals core classes add to percentage of classes that have been compleeted
+    print("hello")
