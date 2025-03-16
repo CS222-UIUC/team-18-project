@@ -18,6 +18,20 @@ def minor_progress(request):
         "Spanish": 0,
         "Physics": 0
     }
+
+    credit_hours = {
+        "Business": 18,
+        "Computer Science": 16,
+        "Math": 18,
+        "Data Science": 21,
+        "Economics": 18,
+        "Chemistry": 20, 
+        "Statistics": 12, 
+        "Communications": 19,
+        "Spanish": 18,
+        "Physics": 21
+    }
+
     minors_required = {
         #how to account for different headers of class
         #account for the or factor
@@ -47,6 +61,17 @@ def minor_progress(request):
 
     #check all the electives
 
+    #business
+    minors_electives["Business"] = [
+        item for item in inputted_classes 
+        if (item.startswith("BADM 3") or item.startswith("BADM 4")) 
+        and item not in [
+            "BADM 275", "BADM 300", "BADM 311", "BADM 312", "BADM 313", "BADM 314", 
+            "BADM 323", "BADM 326", "BADM 340", "BADM 350", "BADM 380", "BADM 381", "BDI 367",
+            "BDI 411", "BDI 475", "BDI 477", "FIN 230", "FIN 241", "FIN 435"
+        ]
+    ]
+
     #computer science
     minors_electives["Computer Science"] = [
         item for item in inputted_classes 
@@ -54,6 +79,20 @@ def minor_progress(request):
         and item not in [
             "CS 397", "CS 398", "CS 400", "CS 401", "CS 402", "CS 403", 
             "CS 413", "CS 491", "CS 492", "CS 493", "CS 494", "CS 497", "CS 499"
+        ]
+    ]
+
+    #spanish
+    minors_electives["Spanish"] = [
+        item for item in inputted_classes 
+        if (item.startswith("SPAN 2") and (item.startswith("SPAN 3") or item.startswith("SPAN 4")))
+    ]
+
+    #physics
+    minors_electives["Physics"] = [
+        item for item in inputted_classes 
+        if (item.startswith("PHYS 3") or item.startswith("PHYS 4")) and item not in [
+            "PHYS 419", "PHYS 420"
         ]
     ]
     
