@@ -4,7 +4,7 @@ import React from 'react'
 
 function Title() {
     return (<header style={styles.header}>
-    <h1> UIUC Minor Recommender</h1>
+    <h1> UIUC Minor Recommender </h1>
     </header>);
 }
 
