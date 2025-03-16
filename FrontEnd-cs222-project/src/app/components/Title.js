@@ -4,7 +4,11 @@ import React from 'react'
 
 function Title() {
     return (<header style={styles.header}>
+<<<<<<< HEAD
+    <h1> UIUC Minor Recommender </h1>
+=======
     <h1 style={styles.title}>UIUC Minor Recommender</h1>
+>>>>>>> main
     </header>);
 }
 

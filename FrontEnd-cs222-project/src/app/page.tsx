@@ -1,10 +1,19 @@
 import Image from "next/image";
 import Title from "./components/Title.js";
+import Dropdown from "./components/Dropdown.js";
 
 
 export default function Home() {
-  return <div> <Title/></div>
+
+  const myWords = ['Salami', 'Ham', 'Swiss'];
+  const myWords2 = ['Hamilton', 'Mamma Mia', 'Into the Woods', '9 To 5'];
+
+  return (<div><Title/> 
+   <Title/> <Dropdown title={"Dropdown 1"} words={myWords}/> <Dropdown title={"Dropdown 2"} words={myWords2}/>
+   </div>
+  )
 }
+
 
 
 
