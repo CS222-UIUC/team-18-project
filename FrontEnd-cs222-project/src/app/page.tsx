@@ -1,7 +1,7 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Title from "./components/Title.js";
 import Dropdown from "./components/Dropdown.js";
-
+import Subtitle from './components/subtitle2.js';
 
 export default function Home() {
 
@@ -9,7 +9,7 @@ export default function Home() {
   const myWords2 = ['Hamilton', 'Mamma Mia', 'Into the Woods', '9 To 5'];
 
   return (<div><Title/> 
-   <Title/> <Dropdown title={"Dropdown 1"} words={myWords}/> <Dropdown title={"Dropdown 2"} words={myWords2}/>
+  <Dropdown title={"Dropdown 1"} words={myWords}/> <Subtitle/>  <Dropdown title={"Dropdown 2"} words={myWords2}/>
    </div>
   )
 }
