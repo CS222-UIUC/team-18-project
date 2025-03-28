@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 #need to make a post request in frontend and call this function to get the classes data
+#remove chemistry, statistics
+#loop through dictionary and calculate credit hours completed for each minor
 @api_view(["POST"])
 def minor_progress(request):
     #variables
