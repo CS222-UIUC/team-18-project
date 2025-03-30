@@ -2,6 +2,9 @@
 import React, {useState} from 'react'
 // import Image from "next/image";
 import CheckBox from "./CheckBox.js";
+//import DropdownItem from "./DropdownItem.js";
+
+
 
 
 const DropdownItem = ({word}) => {
@@ -28,12 +31,28 @@ const DropdownItem = ({word}) => {
 };
 
 
+
 function Dropdown({ title , words }) {
   const [open, setOpen] = useState(false);
+  const [start, setStart] = useState(true);
+
+  var checked_or_not = [];
+  var count = false;
   
+  words.forEach(function (item) {
+    checked_or_not.push(count);
+    count = !count;
+  });
+
+  
+
   const handleClick = () => {
+    checked_or_not.forEach( function (item) {
+      checked_or_not[0] = true;
+    });
     setOpen(prevOpen => !(prevOpen));
   };
+
 
   // return ( <div> <span onClick={handleClick} style={{color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}> { title } </span>
   //   {open && 
@@ -86,10 +105,10 @@ function Dropdown({ title , words }) {
           </ul>
         )}
       </div>
+
     </div>
   );
 }
-
 
 
 export default Dropdown;
