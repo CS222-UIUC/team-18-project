@@ -5,8 +5,25 @@ import CheckBox from "./CheckBox.js";
 
 
 const DropdownItem = ({word}) => {
-  return ( 
-    <span style={{color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}>{word} {"\u00A0"} {"\u00A0"} <CheckBox /> </span> 
+  // return ( 
+  //   <span style={{color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}>{word} {"\u00A0"} {"\u00A0"} <CheckBox /> </span> 
+  // );
+  return (
+    <span
+      style={{
+        display: "flex",
+        alignItems: "center",
+        padding: "10px",
+        borderBottom: "1px solid #ddd",
+        color: "#333",
+        width: "100%",
+        backgroundColor: "#fff",
+        cursor: "pointer",
+        transition: "background-color 0.2s, color 0.2s",
+      }}
+    >
+      {word} {"\u00A0"} {"\u00A0"} <CheckBox />
+    </span>
   );
 };
 
@@ -18,11 +35,57 @@ function Dropdown({ title , words }) {
     setOpen(prevOpen => !(prevOpen));
   };
 
-  return ( <div> <span onClick={handleClick} style={{color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}> { title } </span>
-    {open && 
-    <ul>
-      {words.map((wordi, index) => (<li key={index}> <DropdownItem word={wordi} /> </li>))}
-    </ul> }
+  // return ( <div> <span onClick={handleClick} style={{color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}> { title } </span>
+  //   {open && 
+  //   <ul>
+  //     {words.map((wordi, index) => (<li key={index}> <DropdownItem word={wordi} /> </li>))}
+  //   </ul> }
+  //   </div>
+  // );
+  return (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ position: "relative", display: "inline-block", width: "250px" }}>
+        <span
+          onClick={handleClick}
+          style={{
+            color: "black",
+            display: "flex",
+            alignItems: "center",
+            padding: "10px 20px",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            cursor: "pointer",
+            backgroundColor: "#13294B",
+            color: "white",
+            fontSize: "16px",
+            fontWeight: "bold",
+            transition: "background-color 0.3s ease, transform 0.2s ease",
+          }}
+        >
+          {title}
+        </span>
+        {open && (
+          <ul
+            style={{
+              listStyle: "none",
+              padding: "0",
+              margin: "5px 0 0 0",
+              backgroundColor: "#13294B",
+              boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+              borderRadius: "5px",
+              position: "absolute",
+              width: "100%",
+              zIndex: "1",
+            }}
+          >
+            {words.map((wordi, index) => (
+              <li key={index} style={{ margin: "0" }}>
+                <DropdownItem word={wordi} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
