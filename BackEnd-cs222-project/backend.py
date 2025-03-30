@@ -1,9 +1,11 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import pandas as p
+import numpy as np
 
 #need to make a post request in frontend and call this function to get the classes data
-#change some of the minors - 3, fix percentage calculation to be based on credit hours
-
+#remove chemistry, statistics
+#loop through dictionary and calculate credit hours completed for each minor
 @api_view(["POST"])
 def minor_progress(request):
     #variables
@@ -61,6 +63,19 @@ def minor_progress(request):
         "Physics": []
     }
 
+    current_credit = {
+        "Business": [],
+        "Computer Science": [],
+        "Math": [],
+        "Data Science": [],
+        "Economics": [],
+        "Chemistry": [],
+        "Statistics": [], 
+        "Communications": [],
+        "Spanish": [],
+        "Physics": []
+    }
+
     #check all the electives
 
     #business
@@ -103,6 +118,21 @@ def minor_progress(request):
         #list of classes completed for a minor
         common_elements = list(set(inputted_classes) & set(minors_required[minor]))
         percentage_complete[minor] = (len(minors_electives)+len(common_elements))*3/credit_hours[minor]
-    # right now this does not account for credit hours, need to change that
+
+    # calculating credit hours
+
+    gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
+    for minor in minors_electives:
+        current_credit[minor] = 0;
+        for classes in minors_electives[minor]:
+            firstIndex = (gpaFile["courseName"] == classes).idxmax()  
+            firstRow = gpaFile.loc[firstIndex]
+            creditRow = gpaFile.loc[firstRow, "courseName"]
+            check = "OR"
+            if check in creditRow:
+                creditRow = int(check[0:1])
+            else:
+                creditRow = int(creditRow)
+            current_credit[minor] = current_credit[minor] + creditRow
 
     return Response(percentage_complete) #return the percentage completed
