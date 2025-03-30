@@ -5,11 +5,11 @@ import Subtitle from './components/subtitle2.js';
 
 export default function Home() {
 
-  const myWords = ['Salami', 'Ham', 'Swiss'];
-  const myWords2 = ['Hamilton', 'Mamma Mia', 'Into the Woods', '9 To 5'];
+  const majors = ['Business', 'Chemistry', 'Communications', 'Computer Science', 'Data Science', 'Economics', 'Math', 'Physics', 'Spanish', 'Statistics', 'Other'];
+  const classes = ['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'];
 
   return (<div><Title/> 
-  <Dropdown title={"Dropdown 1"} words={myWords}/> <Subtitle/>  <Dropdown title={"Dropdown 2"} words={myWords2}/>
+  <Dropdown title={"Major"} words={majors}/> <Subtitle/>  <Dropdown title={"Classes Taken"} words={classes}/>
    </div>
   )
 }
