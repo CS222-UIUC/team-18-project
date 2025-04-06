@@ -3,10 +3,24 @@ import CheckBox from "./CheckBox.js";
 
 
 
-const DropdownItem = ({word, checkObj, index}) => {
+const DropdownItem = ({word, isChecked, onToggle}) => {
   
     return ( 
-      <span style={{backgroundColor: '#FF5F05', fontFamily: 'Merriweather, sans-serif', fontWeight: 'bold', color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}>{word} {"\u00A0"} {"\u00A0"} <CheckBox checkSet={checkObj} /> </span> 
+      <span 
+      style={{
+        display: "flex",
+        alignItems: "center",
+        padding: "10px",
+        borderBottom: "1px solid #ddd",
+        color: "#333",
+        width: "100%",
+        backgroundColor: "#fff",
+        cursor: "pointer",
+        transition: "background-color 0.2s, coluseStateor 0.2s",
+      }}>
+        {word} {"\u00A0"} {"\u00A0"} 
+        <CheckBox checked={isChecked} onToggle = {onToggle} />
+      </span> 
     );
 };
 
