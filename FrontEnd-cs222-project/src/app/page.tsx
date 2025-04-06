@@ -1,10 +1,56 @@
+
 // import Image from "next/image";
 "use client";
 import Title from "./components/Title.js";
 import Dropdown from "./components/Dropdown.js";
 import Subtitle from './components/subtitle2.js';
 import MajorDropdown from "./components/majorDropdown.js";
-import { useState } from 'react'; 
+import LinkButton from "./components/LinkButton.js";
+import React, { useState } from 'react'; 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './home.tsx';
+import Secondary from './secondary.tsx';
+
+const Page = () => {
+  //return (<Home />);
+
+  
+ 
+  return (
+    
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/secondary" element={<Secondary />} />
+          
+        </Routes>
+      </Router>
+      
+  
+  );
+  
+  
+};
+
+export default Page;
+
+
+
+
+
+
+/*
+
+// import Image from "next/image";
+"use client";
+import Title from "./components/Title.js";
+import Dropdown from "./components/Dropdown.js";
+import Subtitle from './components/subtitle2.js';
+import MajorDropdown from "./components/majorDropdown.js";
+import LinkButton from "./components/LinkButton.js";
+import React, { useState } from 'react'; 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 export default function Home() {
 
@@ -15,11 +61,13 @@ export default function Home() {
     setSelectedMajor(major);  
     console.log("Selected Major:", major); 
   };
-  return (<div><Title/> 
-  <MajorDropdown title={"Major"} options={majors} handleSelect={handleSelect}/> <Subtitle/>  <Dropdown title={"Classes Taken"} words={classes}/>
+  return (<div>
+    <Title/> 
+  <MajorDropdown title={"Major"} options={majors} handleSelect={handleSelect}/> <Subtitle/>  <Dropdown title={"Classes Taken"} words={classes}/> <LinkButton/>
    </div>
   )
 }
+*/
 
 
 
