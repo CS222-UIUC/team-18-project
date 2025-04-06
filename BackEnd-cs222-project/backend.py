@@ -7,6 +7,10 @@ import numpy as np
 #remove chemistry, statistics
 #loop through dictionary and calculate credit hours completed for each minor
 @api_view(["POST"])
+
+def classNames(self): 
+    gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
+    return gpaFile["courseName"].to_list()
 def minor_progress(request):
     #variables
     inputted_classes = request.data.get("classes", [])
@@ -64,16 +68,16 @@ def minor_progress(request):
     }
 
     current_credit = {
-        "Business": 0,
-        "Computer Science": 0,
-        "Math": 0,
-        "Data Science": 0,
-        "Economics": 0,
-        "Chemistry": 0,
-        "Statistics": 0, 
-        "Communications": 0,
-        "Spanish": 0,
-        "Physics": 0
+        "Business": [],
+        "Computer Science": [],
+        "Math": [],
+        "Data Science": [],
+        "Economics": [],
+        "Chemistry": [],
+        "Statistics": [], 
+        "Communications": [],
+        "Spanish": [],
+        "Physics": []
     }
 
     #check all the electives
@@ -97,57 +101,7 @@ def minor_progress(request):
             "CS 397", "CS 398", "CS 400", "CS 401", "CS 402", "CS 403", 
             "CS 413", "CS 491", "CS 492", "CS 493", "CS 494", "CS 497", "CS 499"
         ]
-    ][:2]
-
-    #math
-    minors_electives["Math"] = [
-        item for item in inputted_classes 
-        if item in {
-            "ASRM 406", "MATH 257", "MATH 415", "MATH 416", "MATH 417", "MATH 418", "MATH 427", "MATH 453",
-            "MATH 412", "MATH 413", "MATH 414", "MATH 482", "MATH 284", "MATH 285", "MATH 424", "MATH 425", 
-            "MATH 441", "MATH 442", "MATH 444", "MATH 446", "MATH 447", "MATH 448", "CS 450", "MATH 484", 
-            "MATH 487", "MATH 489", "MATH 347", "MATH 402", "MATH 403", "MATH 423", "MATH 428", "MATH 432", 
-            "MATH 481", "MATH 461", "STAT 400"
-        } 
-        or (item in {"STAT 410", "STAT 420"} and not {"STAT 410", "STAT 420"}.issubset(inputted_classes))
-    ] [:5]
-
-    #data science
-    minors_electives["Data Science"] = [
-        item for item in inputted_classes
-        if item in {
-            "ATMS 207", "CS 416", "CS 441", "GGIS 407", 
-            "IS 357", "IS 417", "IS 445", "LING 406", "MATH 467", "STAT 432", 
-            "STAT 440", "STAT 447", "STAT 480"
-        } or (item in {"CS 225", "CS 277"} and not {"CS 225", "CS 277"}.issubset(inputted_classes))][:2] + 
-        [item for item in inputted_classes 
-        if item in {"IS 467", "IS 477"}][:1]
-
-
-    #economics
-    #microeconomics track
-    if any(item in inputted_classes for item in ["ECON 411", "ECON 414", "ECON 440", "ECON 450", "ECON 451", "ECON 452", "ECON 480", "ECON 481", "ECON 483", "ECON 482", "ECON 484", "ECON 490"]):
-        minors_electives["Economics"] = [
-            item for item in inputted_classes 
-            if item in {
-                "ECON 411", "ECON 414", "ECON 440", "ECON 450", "ECON 451", "ECON 452", 
-                "ECON 480", "ECON 481", "ECON 483", "ECON 482", "ECON 484", "ECON 490"
-            }
-        ][:2]
-    #macroeconomics track
-    elif any(item in inputted_classes for item in ["ECON 103", "ECON 303", "ECON 420", "ECON 425", "ECON 452", "ECON 490"]):
-        minors_electives["Economics"] = [
-            "ECON 103", "ECON 303"
-        ] + [
-            item for item in inputted_classes 
-            if item in {"ECON 420", "ECON 425", "ECON 452", "ECON 490"}
-        ][:1]
-    #econometrics track
-    elif any(item in inputted_classes for item in ["ECON 471", "ECON 465", "ECON 490"]):
-        minors_electives["Economics"] = [
-            item for item in inputted_classes 
-            if item in {"ECON 471", "ECON 465", "ECON 490"}
-        ]
+    ]
 
     #spanish
     minors_electives["Spanish"] = [
@@ -162,10 +116,18 @@ def minor_progress(request):
             "PHYS 419", "PHYS 420"
         ]
     ]
+    
+    for minor in minors_required:
+        #if inputed classes equals core classes add to percentage of classes that have been compleeted
+        #list of classes completed for a minor
+        common_elements = list(set(inputted_classes) & set(minors_required[minor]))
+        percentage_complete[minor] = (len(minors_electives)+len(common_elements))*3/credit_hours[minor]
+
+    # calculating credit hours
 
     gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
-    #calculate credit hours from electives
     for minor in minors_electives:
+        current_credit[minor] = 0;
         for classes in minors_electives[minor]:
             firstIndex = (gpaFile["courseName"] == classes).idxmax()  
             firstRow = gpaFile.loc[firstIndex]
@@ -176,23 +138,5 @@ def minor_progress(request):
             else:
                 creditRow = int(creditRow)
             current_credit[minor] = current_credit[minor] + creditRow
-    
-    #calculate credit hours from required courses
-    common_elements = list(set(inputted_classes) & set(minors_required[minor]));
-    for classes in common_elements:
-        firstIndex = (gpaFile["courseName"] == classes).idxmax()  
-        firstRow = gpaFile.loc[firstIndex]
-        creditRow = gpaFile.loc[firstRow, "courseName"]
-        check = "OR"
-        if check in creditRow:
-            creditRow = int(check[0:1])
-        else:
-            creditRow = int(creditRow)
-        current_credit[minor] = current_credit[minor] + creditRow
-
-    
-    #calculate the percentage completed
-    for minor in minors_required:
-        percentage_complete[minor] = (current_credit[minor])/(credit_hours[minor]);
 
     return Response(percentage_complete) #return the percentage completed
