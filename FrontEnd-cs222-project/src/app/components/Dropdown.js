@@ -1,55 +1,60 @@
 "use client"
 import React, {useState} from 'react'
 // import Image from "next/image";
-import CheckBox from "./CheckBox.js";
-//import DropdownItem from "./DropdownItem.js";
+//import CheckBox from "./CheckBox.js";
+import DropdownItem from "./DropdownItem.js";
 
 
 
 
-const DropdownItem = ({word}) => {
-  // return ( 
-  //   <span style={{color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}>{word} {"\u00A0"} {"\u00A0"} <CheckBox /> </span> 
-  // );
-  return (
-    <span
-      style={{
-        display: "flex",
-        alignItems: "center",
-        padding: "10px",
-        borderBottom: "1px solid #ddd",
-        color: "#333",
-        width: "100%",
-        backgroundColor: "#fff",
-        cursor: "pointer",
-        transition: "background-color 0.2s, color 0.2s",
-      }}
-    >
-      {word} {"\u00A0"} {"\u00A0"} <CheckBox />
-    </span>
-  );
-};
+// const DropdownItem = ({word}) => {
+//   // return ( 
+//   //   <span style={{color: "black", display: "flex", align_items: "center", padding: "10px", border: "1px solid black", width: "25%", margin: "0 auto"}}>{word} {"\u00A0"} {"\u00A0"} <CheckBox /> </span> 
+//   // );
+//   return (
+//     <span
+//       style={{
+//         display: "flex",
+//         alignItems: "center",
+//         padding: "10px",
+//         borderBottom: "1px solid #ddd",
+//         color: "#333",
+//         width: "100%",
+//         backgroundColor: "#fff",
+//         cursor: "pointer",
+//         transition: "background-color 0.2s, coluseStateor 0.2s",
+//       }}
+//     >
+//       {word} {"\u00A0"} {"\u00A0"} <CheckBox />
+//     </span>
+//   );
+// };
 
 
 
 function Dropdown({ title , words }) {
   const [open, setOpen] = useState(false);
-  const [start, setStart] = useState(true);
+  const [checkedState, setChecked] = useState(Array(words.length).fill(false));
+  //const [start, setStart] = useState(true);
 
-  var checked_or_not = [];
-  var count = false;
+  // var checked_or_not = [];
+  // var count = false;
   
-  words.forEach(function (item) {
-    checked_or_not.push(count);
-    count = !count;
-  });
+  // for (let i = 0; i < words.length; i++) {
+  //   checked_or_not.push(count);
+  //   count = !count;
+  // }
 
-  
+  const toggleCheck = (index) => {
+    const updated = [...checkedState];
+    updated[index] = !updated[index];
+    setChecked(updated);
+  }
 
   const handleClick = () => {
-    checked_or_not.forEach( function (item) {
-      checked_or_not[0] = true;
-    });
+    // for (let i = 0; i < checked_or_not.length; i++) {
+    //   checked_or_not[i] = true;
+    // }
     setOpen(prevOpen => !(prevOpen));
   };
 
@@ -97,9 +102,13 @@ function Dropdown({ title , words }) {
               zIndex: "1",
             }}
           >
-            {words.map((wordi, index) => (
+            {words.map((word, index) => (
               <li key={index} style={{ margin: "0" }}>
-                <DropdownItem word={wordi} />
+                <DropdownItem 
+                  word={word} 
+                  isChecked = {checkedState[index]}
+                  onToggle={() => toggleCheck(index)}
+                />
               </li>
             ))}
           </ul>

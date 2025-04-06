@@ -11,7 +11,12 @@ import numpy as np
 def classNames(self): 
     gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
     return gpaFile["courseName"].to_list()
-def minor_progress(request, major):
+<<<<<<< vaani
+# def minor_progress(request, major):
+# =======
+
+# def minor_progress(request):
+>>>>>>> main
     #variables
     inputted_classes = request.data.get("classes", [])
     percentage_complete = {
