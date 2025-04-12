@@ -1,30 +1,43 @@
 
 // import Image from "next/image";
 "use client";
-import Title from "./components/Title.js";
-import Dropdown from "./components/Dropdown.js";
+//import Title from "./components/Title.js";
+//import Dropdown from "./components/Dropdown.js";
 import Subtitle from './components/subtitle2.js';
 import MajorDropdown from "./components/majorDropdown.js";
 import LinkButton from "./components/LinkButton.js";
-import React, { useState } from 'react'; 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './home.tsx';
-import Secondary from './secondary.tsx';
+import React, { useEffect, useState } from 'react'; 
+import { BrowserRouter, Routes, Route, RedirectFunction } from 'react-router-dom';
+//import Home from './pages/home.tsx';
+import Secondary from './pages/secondary.tsx';
+import { useNavigate } from 'react-router-dom';
+import Home from './pages/home.tsx';
 
 const Page = () => {
   //return (<Home />);
 
-  
+  //const navigate = useNavigate;
+
+  //navigate('/home');
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
  
   return (
+    <div>
     
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/secondary" element={<Secondary />} />
-          
-        </Routes>
-      </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/secondary" element={<Secondary refresh={0}/>} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+    </div>
       
   
   );

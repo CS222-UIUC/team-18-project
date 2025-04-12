@@ -1,10 +1,10 @@
 // import Image from "next/image";
 "use client";
-import Title from "./components/Title.js";
-import Dropdown from "./components/Dropdown.js";
-import Subtitle from './components/subtitle2.js';
-import MajorDropdown from "./components/majorDropdown.js";
-import LinkButton from "./components/LinkButton.js";
+import Title from "../components/Title.js";
+import Dropdown from "../components/Dropdown.js";
+import Subtitle from '../components/subtitle2.js';
+import MajorDropdown from "../components/majorDropdown.js";
+import LinkButton from "../components/LinkButton.js";
 import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
@@ -24,8 +24,8 @@ export default function Home() {
     navigate('/secondary');
   }
   return (<div>
-    <Title/> 
-  <MajorDropdown title={"Major"} options={majors} handleSelect={handleSelect}/> <Subtitle/>  <Dropdown title={"Classes Taken"} words={classes}/> <button onClick={goToSecondaryPage}  style={{color: 'black'}}> Go To Secondary Page</button>
+    <Title/> <Subtitle string={"Please select your major:"}/>
+  <MajorDropdown title={"Major"} options={majors} handleSelect={handleSelect}/> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes}/> <button onClick={goToSecondaryPage}  style={{color: 'black', marginTop: '200px', marginLeft: '10px'}}> Go To Secondary Page</button>
    </div>
   )
 }
