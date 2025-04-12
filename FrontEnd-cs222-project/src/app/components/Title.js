@@ -8,7 +8,7 @@ function Title() {
             <header style={styles.header}>
                 <h1 style={styles.title}>UIUC Minor Recommender</h1>
             </header>
-            <h2 style={styles.subtitle}>Please select your major:</h2>
+            
         </>
     );
 
