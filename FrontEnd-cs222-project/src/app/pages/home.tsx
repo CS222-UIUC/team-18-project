@@ -23,6 +23,13 @@ export default function Home() {
   const [classesData, setClassesData] = useState(Array(classes.length).fill(false));
 
   const goToSecondaryPage = () => {
+    let to_include = Array();
+    for (let i = 0; i < classesData.length; ++i) {
+      if (classesData[i]) {
+        to_include.push(classes[i]);
+        console.log('Added:', classes[i]);
+      }
+    }
     navigate('/secondary');
   }
 
