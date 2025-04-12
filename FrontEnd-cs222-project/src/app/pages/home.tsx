@@ -20,12 +20,25 @@ export default function Home() {
 
   const navigate = useNavigate();
 
+  const [classesData, setClassesData] = useState(Array(classes.length).fill(false));
+
   const goToSecondaryPage = () => {
     navigate('/secondary');
   }
+
+  const handleDataFromChild = (childData : Array<boolean>) => {
+    setClassesData(childData);
+    for (let i = 0; i < childData.length; ++i) {
+      if (childData[i]) {
+        console.log(classes[i]);
+      } 
+    }
+  };
+
+
   return (<div>
     <Title/> <Subtitle string={"Please select your major:"}/>
-  <MajorDropdown title={"Major"} options={majors} handleSelect={handleSelect}/> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes}/> <button onClick={goToSecondaryPage}  style={{color: 'black', marginTop: '200px', marginLeft: '10px'}}> Go To Secondary Page</button>
+  <MajorDropdown title={"Major"} options={majors} handleSelect={handleSelect}/> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChild}/> <button onClick={goToSecondaryPage}  style={{color: 'black', marginTop: '200px', marginLeft: '10px'}}> Go To Secondary Page</button>
    </div>
   )
 }
