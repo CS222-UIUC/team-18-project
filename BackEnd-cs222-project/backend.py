@@ -7,10 +7,12 @@ import numpy as np
 #remove chemistry, statistics
 #loop through dictionary and calculate credit hours completed for each minor
 @api_view(["POST"])
-
 def classNames(self): 
     gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
     return gpaFile["courseName"].to_list()
+
+@api_view(["POST"])
+def minor_progress(request, major):
 <<<<<<< vaani
 # def minor_progress(request, major):
 # =======
