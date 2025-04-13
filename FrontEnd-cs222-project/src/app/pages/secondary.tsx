@@ -31,7 +31,27 @@ export default function Secondary({refresh = 0}) {
   return (<div style={{color : 'black'}}>
     <Title/> <Subtitle string={"Here Is Your Recommended Minor Data:"} />
     <MinorPercentList minors={minors} percentages={percentages}/>
-  <button onClick={goToHomePage} style={{color: 'black', marginLeft: '10px', marginTop: '200px'}}> Go To Home Page</button>
+    <button
+  onClick={goToHomePage}
+  style={{
+    color: 'white',
+    backgroundColor: '#E84A27',
+    padding: '12px 24px',
+    border: 'none',
+    borderRadius: '10px',
+    marginTop: '200px',
+    marginLeft: '10px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: '500',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    transition: 'background-color 0.3s ease',
+  }}
+  onMouseEnter={e => (e.target.style.backgroundColor = '#13294B')}
+  onMouseLeave={e => (e.target.style.backgroundColor = '#E84A27')}
+>
+  Back
+</button>
    </div>
   )
 }
