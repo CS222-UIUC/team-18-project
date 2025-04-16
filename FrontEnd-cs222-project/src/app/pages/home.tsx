@@ -65,8 +65,8 @@ export default function Home() {
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     transition: 'background-color 0.3s ease',
   }}
-  onMouseEnter={e => (e.target.style.backgroundColor = '#13294B')}
-  onMouseLeave={e => (e.target.style.backgroundColor = '#E84A27')}
+  onMouseEnter={e => ((e.target as HTMLElement).style.backgroundColor = '#13294B')}
+  onMouseLeave={e => ((e.target as HTMLElement).style.backgroundColor = '#E84A27')}
 >
   Next Page
 </button>
