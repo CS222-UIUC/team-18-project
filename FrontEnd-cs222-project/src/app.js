@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/second', (req, res) => {
-    res.send('Welcome to the Sconed Page!');
+    res.send('Welcome to the Second Page!');
 });
 
 app.listen(port, () => {
