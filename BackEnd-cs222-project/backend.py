@@ -7,16 +7,12 @@ import numpy as np
 #remove chemistry, statistics
 #loop through dictionary and calculate credit hours completed for each minor
 @api_view(["POST"])
-
 def classNames(self): 
     gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
     return gpaFile["courseName"].to_list()
-#<<<<<<< vaani
-#def minor_progress(request, major):
-# =======
 
-def minor_progress(request):
-#>>>>>>> main
+@api_view(["POST"])
+def minor_progress(request, major):
     #variables
     inputted_classes = request.data.get("classes", [])
     percentage_complete = {
@@ -90,12 +86,12 @@ def minor_progress(request):
     #business
     minors_electives["Business"] = [
         item for item in inputted_classes 
-        if (item.startswith("BADM 3") or item.startswith("BADM 4")) 
-        and item not in [
+        if (item in [
             "BADM 275", "BADM 300", "BADM 311", "BADM 312", "BADM 313", "BADM 314", 
-            "BADM 323", "BADM 326", "BADM 340", "BADM 350", "BADM 380", "BADM 381", "BDI 367",
-            "BDI 411", "BDI 475", "BDI 477", "FIN 230", "FIN 241", "FIN 435"
-        ]
+            "BADM 323", "BADM 326", "BADM 340", "BADM 350", "BADM 380", "BADM 381", 
+            "BDI 367", "BDI 411", "BDI 475", "BDI 477", "FIN 230", "FIN 241", "FIN 435"
+        ][:2]) 
+        or (item == "ACCY 200" or (item in ["ACCY 201", "ACCY 202"] and all(sub in inputted_classes for sub in ["ACCY 201", "ACCY 202"])))
     ]
 
     # business analytics
@@ -189,6 +185,8 @@ def minor_progress(request):
             item for item in inputted_classes 
             if item in {"ECON 471", "ECON 465", "ECON 490"}
         ]
+
+
     # statistics
     minors_electives["Statistics"] = [
         item for item in inputted_classes
@@ -218,19 +216,19 @@ def minor_progress(request):
             "STAT 437", "STAT 440", "STAT 443", "STAT 447", "STAT 448", "STAT 480"
         ]
     ][:2]
+
     #spanish
     minors_electives["Spanish"] = [
-        item for item in inputted_classes 
-        if (item.startswith("SPAN 2") and (item.startswith("SPAN 3") or item.startswith("SPAN 4")))
+        [item for item in inputted_classes if item.startswith("SPAN 2")][:3] +
+            [item for item in inputted_classes if item.startswith("SPAN 3") or item.startswith("SPAN 4")][:3]
     ]
 
     #physics
-    minors_electives["Physics"] = [
-        item for item in inputted_classes 
-        if (item.startswith("PHYS 3") or item.startswith("PHYS 4")) and item not in [
-            "PHYS 419", "PHYS 420"
-        ]
-    ]
+    minors_electives["Physics"] = (
+        [item for item in inputted_classes 
+        if (item.startswith("PHYS 3") or item.startswith("PHYS 4")) and item not in ["PHYS 419", "PHYS 420"]][:2]
+        + [item for item in inputted_classes if item in ["PHYS 213", "PHYS 214"]][:1]
+    )
     
     gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
     #calculate credit hours from electives
