@@ -34,10 +34,12 @@ function MajorDropdown({ title, options, handleSelect }) {
             color: "white",
             cursor: "pointer",
             fontWeight: "bold",
-            width: "100%",
+            width: "100%", // changed from 50%
             textAlign: "center",
-            position: "relative",
-            zIndex: 100
+            fontSize: "16px",
+            fontFamily: "Arial, sans-serif",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            transition: "background-color 0.2s ease"
           }}
         >
           {selected || title}
@@ -52,13 +54,14 @@ function MajorDropdown({ title, options, handleSelect }) {
               padding: 0,
               position: "absolute",
               backgroundColor: "#fff",
-              width: "400px",
+              width: "100%",
               border: "1px solid #ccc",
               borderRadius: "5px",
               maxHeight: "200px",
               overflowY: "auto",
               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-              zIndex: 200
+              zIndex: 200,
+              fontFamily: "Arial, sans-serif"
             }}
           >
             {options.map((option, idx) => (

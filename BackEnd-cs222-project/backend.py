@@ -158,8 +158,7 @@ def minor_progress(request, major):
             "ATMS 207", "CS 416", "CS 441", "GGIS 407", 
             "IS 357", "IS 417", "IS 445", "LING 406", "MATH 467", "STAT 432", 
             "STAT 440", "STAT 447", "STAT 480"
-        } or (item in {"CS 225", "CS 277"} and not {"CS 225", "CS 277"}.issubset(inputted_classes))][:2] + 
-        [item for item in inputted_classes 
+        } or (item in {"CS 225", "CS 277"} and not {"CS 225", "CS 277"}.issubset(inputted_classes))][:2] + [item for item in inputted_classes 
         if item in {"IS 467", "IS 477"}][:1]
     
     #economics
@@ -263,4 +262,11 @@ def minor_progress(request, major):
     for minor in minors_required:
         percentage_complete[minor] = 100*(current_credit[minor])/(credit_hours[minor])
 
+    #calculating top 3 minors based on completed credit hours
+    
     return Response(percentage_complete) #return the percentage completed
+
+def topMinors(minors):
+    top3 = sorted(minors.items(), key=lambda x: x[1], reverse=True)[:3]
+    return top3
+

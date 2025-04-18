@@ -2,13 +2,13 @@ import React from 'react'
 
 
 
-function Subtitle() {
+function Subtitle({string}) {
     return (
         <>
             {/* <header style={styles.header}>
                 <h1 style={styles.title}>UIUC Minor Recommender</h1>
             </header> */}
-            <h2 style={styles.subtitle}>Select the classes you&apos;ve taken:</h2>
+            <h2 style={styles.subtitle}> {string} </h2>
         </>
     );
 
