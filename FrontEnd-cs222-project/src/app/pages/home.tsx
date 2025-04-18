@@ -21,6 +21,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const [classesData, setClassesData] = useState(Array(classes.length).fill(false));
+  const [majorData, setMajorData] = useState(Array(majors.length).fill(false));
 
   const goToSecondaryPage = () => {
     let to_include = Array();
@@ -30,14 +31,30 @@ export default function Home() {
         console.log('Added:', classes[i]);
       }
     }
+    let to_include_majors = Array();
+    for (let i = 0; i < majorData.length; ++i) {
+      if (majorData[i]) {
+        to_include_majors.push(majors[i]);
+        console.log('Added:', majors[i]);
+      }
+    }
     navigate('/secondary');
   }
 
-  const handleDataFromChild = (childData : Array<boolean>) => {
+  const handleDataFromChildClasses = (childData : Array<boolean>) => {
     setClassesData(childData);
     for (let i = 0; i < childData.length; ++i) {
       if (childData[i]) {
         console.log(classes[i]);
+      } 
+    }
+  };
+
+  const handleDataFromChildMajors = (childData : Array<boolean>) => {
+    setMajorData(childData);
+    for (let i = 0; i < childData.length; ++i) {
+      if (childData[i]) {
+        console.log(majors[i]);
       } 
     }
   };
@@ -48,8 +65,8 @@ export default function Home() {
     <Dropdown 
       title={"Major"} 
       words={majors} 
-      sendDataToParent={handleSelect} 
-    /> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChild}/> <button
+      sendDataToParent={handleDataFromChildMajors} 
+    /> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChildClasses}/> <button
   onClick={goToSecondaryPage}
   style={{
     color: 'white',
