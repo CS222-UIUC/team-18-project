@@ -19,6 +19,7 @@ export default function Home() {
 
   const [classes, setClasses] = useState<string[]>([]);
   const [classesData, setClassesData] = useState<boolean[]>([]);
+  const [majorData, setMajorData] = useState<boolean[]>([]);
   const [selectedMajor, setSelectedMajor] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -43,11 +44,20 @@ export default function Home() {
     setClassesData(Array(classes.length).fill(false));
   }, [classes]);
 
-  const handleDataFromChild = (childData: boolean[]) => {
+  const handleDataFromChildClasses = (childData: boolean[]) => {
     setClassesData(childData);
     for (let i = 0; i < childData.length; ++i) {
       if (childData[i]) {
         console.log(classes[i]);
+      } 
+    }
+  };
+
+  const handleDataFromChildMajors = (childData : Array<boolean>) => {
+    setMajorData(childData);
+    for (let i = 0; i < childData.length; ++i) {
+      if (childData[i]) {
+        console.log(majors[i]);
       } 
     }
   };
@@ -70,14 +80,7 @@ export default function Home() {
     navigate('/secondary');
   };
 
-  const handleDataFromChildMajors = (childData : Array<boolean>) => {
-    setMajorData(childData);
-    for (let i = 0; i < childData.length; ++i) {
-      if (childData[i]) {
-        console.log(majors[i]);
-      } 
-    }
-  };
+  
 
 
   return (<div>
@@ -109,6 +112,7 @@ export default function Home() {
 </button>
    </div>
   )
+  /*
   return (
     <div>
       <Title />
@@ -147,4 +151,5 @@ export default function Home() {
       </button>
     </div>
   );
+  */
 }
