@@ -51,6 +51,7 @@ export default function Home() {
 
   const goToSecondaryPage = () => {
     const to_include: string[] = [];
+    const to_include: string[] = [];
     for (let i = 0; i < classesData.length; ++i) {
       if (classesData[i]) {
         to_include.push(classes[i]);
@@ -58,15 +59,6 @@ export default function Home() {
       }
     }
     navigate('/secondary');
-  }
-
-  const handleDataFromChild = (childData : Array<boolean>) => {
-    setClassesData(childData);
-    for (let i = 0; i < childData.length; ++i) {
-      if (childData[i]) {
-        console.log(classes[i]);
-      } 
-    }
   };
 
    // Show loading state while fetching classes
