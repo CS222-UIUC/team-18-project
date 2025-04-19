@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 function LinkButton() {
-  const [pushed, setPushed] = useState(false);
+  const [setPushed] = useState(false);
 
   const handleClick = () => {
     setPushed(prevPushed => !prevPushed);

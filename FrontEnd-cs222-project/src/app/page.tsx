@@ -3,14 +3,14 @@
 "use client";
 //import Title from "./components/Title.js";
 //import Dropdown from "./components/Dropdown.js";
-import Subtitle from './components/subtitle2.js';
-import MajorDropdown from "./components/majorDropdown.js";
-import LinkButton from "./components/LinkButton.js";
+//import Subtitle from './components/subtitle2.js';
+//import MajorDropdown from "./components/majorDropdown.js";
+//import LinkButton from "./components/LinkButton.js";
 import React, { useEffect, useState } from 'react'; 
-import { BrowserRouter, Routes, Route, RedirectFunction } from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 //import Home from './pages/home.tsx';
 import Secondary from './pages/secondary.tsx';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import Home from './pages/home.tsx';
 
 const Page = () => {

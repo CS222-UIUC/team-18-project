@@ -6,11 +6,11 @@ import numpy as np
 #need to make a post request in frontend and call this function to get the classes data
 #remove chemistry, statistics
 #loop through dictionary and calculate credit hours completed for each minor
-@api_view(["POST"])
+@api_view(["GET", "POST"])
 
-def classNames(self): 
+def classNames(request): 
     gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
-    return gpaFile["courseName"].to_list()
+    return Response(gpaFile["courseName"].to_list())
 #<<<<<<< vaani
 #def minor_progress(request, major):
 # =======
@@ -19,6 +19,7 @@ def minor_progress(request):
 #>>>>>>> main
     #variables
     inputted_classes = request.data.get("classes", [])
+    major = request.data.get("major", "")
     percentage_complete = {
         "Business": 0,
         "Business Analytics": 0,
@@ -265,8 +266,11 @@ def minor_progress(request):
         percentage_complete[minor] = 100*(current_credit[minor])/(credit_hours[minor])
 
     #calculating top 3 minors based on completed credit hours
-    
-    return Response(percentage_complete) #return the percentage completed
+    top_minors = topMinors(percentage_complete)
+    return Response({
+        "percentages": percentage_complete,
+        "top_minors": top_minors
+    }) #return the percentage completed
 
 def topMinors(minors):
     top3 = sorted(minors.items(), key=lambda x: x[1], reverse=True)[:3]
