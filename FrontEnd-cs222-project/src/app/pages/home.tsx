@@ -10,7 +10,6 @@ export default function Home() {
 
   const majors = ['Aerospace Engineering', 'Agricultural and Biological Engineering', 'Bioengineering', 'Chemical Engineering', 'Civil Engineering', 'Computer Engineering', 'Computer Science', 'Electrical Engineering', 'Engineering Mechanics', 'Engineering Physics', 'Industrial Engineering', 'Materials Science and Engineering', 'Mechanical Engineering', 'Nuclear, Plasma, and Radiological Engineering', 'Systems Engineering and Design', 'Engineering Undeclared']
   const [classes, setClasses] = useState<string[]>([]);
-  const [minorProgressData, setMinorProgressData] = useState<any>(null);
 
   //const classes = ['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'];
   const [isLoading, setIsLoading] = useState(true);
@@ -53,39 +52,6 @@ export default function Home() {
   
     fetchClasses();
   }, []);
-
-
-  useEffect(() => {
-    const fetchMinorProgress = async () => {
-      if (!selectedMajor) return;
-
-      const encodedMajor = encodeURIComponent(selectedMajor);
-      console.log(`Fetching minor progress for ${selectedMajor}...`);
-
-      try {
-        const response = await fetch(`http://localhost:8000/api/minor_progress/${encodedMajor}/`, {
-          method: "GET",
-          headers: {
-            "Accept": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Failed to fetch minor progress: ${response.status} ${response.statusText} - ${errorText}`);
-        }
-
-        const data = await response.json();
-        console.log("Minor progress data:", data);
-        setMinorProgressData(data);
-        // Do something with the data if you want to display it
-      } catch (error) {
-        console.error("Error fetching minor progress:", error);
-      }
-    };
-
-    fetchMinorProgress();
-  }, [selectedMajor]);
 
 
   const handleSelect = (major: string) => {
@@ -168,31 +134,6 @@ export default function Home() {
     >
       Next Page
     </button>
-     {minorProgressData && (
-      <div style={{ marginTop: "40px", padding: "20px", borderRadius: "10px", backgroundColor: "#f5f5f5" }}>
-        <h2 style={{ color: "#13294B", marginBottom: "16px" }}>Minor Completion by Major</h2>
-        <ul style={{ listStyleType: "none", padding: 0 }}>
-          {Object.entries(minorProgressData).map(([major, percent]) => (
-            <li key={major} style={{ marginBottom: "12px" }}>
-              <strong>{major}:</strong> {Number(percent)}% complete
-              <div style={{ 
-                width: "100%", 
-                backgroundColor: "#ddd", 
-                borderRadius: "5px", 
-                marginTop: "4px" 
-              }}>
-                <div style={{ 
-                  width: `${percent}%`, 
-                  backgroundColor: Number(percent) >= 70 ? "#28a745" : "#ffc107", 
-                  height: "10px", 
-                  borderRadius: "5px" 
-                }} />
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-  )}
    </div>
   )
   /*

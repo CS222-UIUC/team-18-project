@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import pandas as p
 import numpy as np
+from django.conf import settings
 
 #need to make a post request in frontend and call this function to get the classes data
 #remove chemistry, statistics
@@ -20,13 +21,11 @@ def classNames(request):
     gpaFile = p.read_csv(CSV_PATH)
     return Response(gpaFile["courseName"].drop_duplicates().tolist())
     #return Response(['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'])
-#<<<<<<< vaani
-#def minor_progress(request, major):
-# =======
 
 @api_view(["GET", "POST"])
 def minor_progress(request, major):
     #variables
+    gpaFile = p.read_csv(CSV_PATH)
     inputted_classes = request.data.get("classes", [])
     major = request.data.get("major", "")
     percentage_complete = {
@@ -243,8 +242,7 @@ def minor_progress(request, major):
         if (item.startswith("PHYS 3") or item.startswith("PHYS 4")) and item not in ["PHYS 419", "PHYS 420"]][:2]
         + [item for item in inputted_classes if item in ["PHYS 213", "PHYS 214"]][:1]
     )
-    
-    gpaFile = p.read_csv("../course-catalog.csv")
+
     #calculate credit hours from electives
     for minor in minors_electives:
         for classes in minors_electives[minor]:

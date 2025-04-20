@@ -58,7 +58,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Alternatively, for development only
-# CORS_ALLOW_ALL_ORIGINS = True
+#CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
