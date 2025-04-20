@@ -1,48 +1,67 @@
+// import Image from "next/image";
 "use client";
 import Title from "../components/Title.js";
 import Dropdown from "../components/Dropdown.js";
 import Subtitle from '../components/subtitle2.js';
-import MajorDropdown from "../components/majorDropdown.js";
-import LinkButton from "../components/LinkButton.js";
-import React, { useEffect, useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
-  const majors = [
-    'Aerospace Engineering', 'Agricultural and Biological Engineering', 'Bioengineering', 
-    'Chemical Engineering', 'Civil Engineering', 'Computer Engineering', 'Computer Science', 
-    'Electrical Engineering', 'Engineering Mechanics', 'Engineering Physics', 'Industrial Engineering', 
-    'Materials Science and Engineering', 'Mechanical Engineering', 
-    'Nuclear, Plasma, and Radiological Engineering', 'Systems Engineering and Design', 
-    'Engineering Undeclared'
-  ];
 
+  const majors = ['Aerospace Engineering', 'Agricultural and Biological Engineering', 'Bioengineering', 'Chemical Engineering', 'Civil Engineering', 'Computer Engineering', 'Computer Science', 'Electrical Engineering', 'Engineering Mechanics', 'Engineering Physics', 'Industrial Engineering', 'Materials Science and Engineering', 'Mechanical Engineering', 'Nuclear, Plasma, and Radiological Engineering', 'Systems Engineering and Design', 'Engineering Undeclared']
   const [classes, setClasses] = useState<string[]>([]);
-  const [classesData, setClassesData] = useState<boolean[]>([]);
-  const [majorData, setMajorData] = useState<boolean[]>([]);
-  const [selectedMajor, setSelectedMajor] = useState<string | null>(null);
 
+  //const classes = ['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'];
+  const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  
+  const [majorData, setMajorData] = useState<boolean[]>([]);
+
+  const [selectedMajor, setSelectedMajor] = useState<string | null>(null);
+  const [classesData, setClassesData] = useState<boolean[]>([]);
+  
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        setIsLoading(true);
+        console.log("Fetching classes from http://localhost:8000/api/classNames/");
+        const response = await fetch('http://localhost:8000/api/classNames/', {
+          mode: 'cors', // Explicitly set CORS mode
+          headers: {
+            'Accept': 'application/json',
+          },
+        });
+        console.log("Response status:", response.status, response.statusText);
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Failed to fetch classes: ${response.status} ${response.statusText} - ${errorText}`);
+        }
+        const data = await response.json();
+        console.log("Fetched classes:", data);
+        setClasses(data);
+        setClassesData(Array(data.length).fill(false));
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching classes:', error);
+        setIsLoading(false);
+      }
+    };
+  
+    fetchClasses();
+  }, []);
+
+
 
   const handleSelect = (major: string) => {
     setSelectedMajor(major);  
     console.log("Selected Major:", major); 
   };
 
-  useEffect(() => {
-    fetch('http://localhost:8000/classNames/', {
-      method: 'POST',
-    })
-      .then(response => response.json())
-      .then(data => {
-        setClasses(data);
-      })
-      .catch(error => console.error("Failed to fetch classes:", error));
-  }, []);
 
-  useEffect(() => {
-    setClassesData(Array(classes.length).fill(false));
-  }, [classes]);
+  //const [classesData, setClassesData] = useState(Array(classes.length).fill(false));
 
   const handleDataFromChildClasses = (childData: boolean[]) => {
     setClassesData(childData);
@@ -62,6 +81,7 @@ export default function Home() {
     }
   };
 
+
   const goToSecondaryPage = () => {
     const to_include: string[] = [];
     for (let i = 0; i < classesData.length; ++i) {
@@ -80,7 +100,12 @@ export default function Home() {
     navigate('/secondary');
   };
 
-  
+
+
+   // Show loading state while fetching classes
+  if (isLoading) {
+    return <div>Loading classes...</div>;
+  }
 
 
   return (<div>
@@ -152,4 +177,5 @@ export default function Home() {
     </div>
   );
   */
+
 }
