@@ -12,6 +12,7 @@ from django.urls import path
 from . import backend
 
 urlpatterns = [
+    path('', backend.home, name='home'),  # Add root URL pattern
     path('api/classNames/', backend.classNames, name='classNames'),
-    path('api/minor_progress/', backend.minor_progress, name='minor_progress'),
+    #path('api/minor_progress/', backend.minor_progress, name='minor_progress'),
 ]

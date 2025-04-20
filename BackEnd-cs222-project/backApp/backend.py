@@ -1,3 +1,4 @@
+import os
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import pandas as p
@@ -6,16 +7,23 @@ import numpy as np
 #need to make a post request in frontend and call this function to get the classes data
 #remove chemistry, statistics
 #loop through dictionary and calculate credit hours completed for each minor
-@api_view(["GET", "POST"])
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Project root (BackEnd-cs222-project/)
+CSV_PATH = os.path.join(BASE_DIR, 'course-catalog.csv')
+
+@api_view(["GET"])
+def home(request):
+    return Response({"message": "Welcome to the Minor Progress API! Available endpoints: /api/classNames/, /api/minor_progress/"})
+
+@api_view(["GET", "POST"])
 def classNames(request): 
-    gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
+    gpaFile = p.read_csv(CSV_PATH)
     return Response(gpaFile["courseName"].to_list())
 #<<<<<<< vaani
 #def minor_progress(request, major):
 # =======
 
-@api_view(["POST"])
+@api_view(["GET", "POST"])
 def minor_progress(request, major):
     #variables
     inputted_classes = request.data.get("classes", [])
