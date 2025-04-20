@@ -1,6 +1,5 @@
 // import Image from "next/image";
 "use client";
-"use client";
 import Title from "../components/Title.js";
 import Dropdown from "../components/Dropdown.js";
 import Subtitle from '../components/subtitle2.js';
@@ -17,11 +16,13 @@ export default function Home() {
   const [selectedMajor, setSelectedMajor] = useState<string | null>(null);
   const [classesData, setClassesData] = useState<boolean[]>([]);
   
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchClasses = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/classNames/');
+        const response = await fetch('http://localhost:8000/api/classNames/');
         if (!response.ok) {
           throw new Error('Failed to fetch classes');
         }
@@ -45,12 +46,10 @@ export default function Home() {
     console.log("Selected Major:", major); 
   };
 
-  const navigate = useNavigate();
 
   //const [classesData, setClassesData] = useState(Array(classes.length).fill(false));
 
   const goToSecondaryPage = () => {
-    const to_include: string[] = [];
     const to_include: string[] = [];
     for (let i = 0; i < classesData.length; ++i) {
       if (classesData[i]) {
@@ -59,6 +58,15 @@ export default function Home() {
       }
     }
     navigate('/secondary');
+  };
+
+  const handleDataFromChild = (childData : Array<boolean>) => {
+    setClassesData(childData);
+    for (let i = 0; i < childData.length; ++i) {
+      if (childData[i]) {
+        console.log(classes[i]);
+      } 
+    }
   };
 
    // Show loading state while fetching classes
