@@ -22,13 +22,21 @@ export default function Home() {
     const fetchClasses = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('http://localhost:8000/api/classNames/');
+        console.log("Fetching classes from http://localhost:8000/api/classNames/");
+        const response = await fetch('http://localhost:8000/api/classNames/', {
+          mode: 'cors', // Explicitly set CORS mode
+          headers: {
+            'Accept': 'application/json',
+          },
+        });
+        console.log("Response status:", response.status, response.statusText);
         if (!response.ok) {
-          throw new Error('Failed to fetch classes');
+          const errorText = await response.text();
+          throw new Error(`Failed to fetch classes: ${response.status} ${response.statusText} - ${errorText}`);
         }
         const data = await response.json();
+        console.log("Fetched classes:", data);
         setClasses(data);
-        // Initialize classesData with false values for each class
         setClassesData(Array(data.length).fill(false));
         setIsLoading(false);
       } catch (error) {
@@ -36,7 +44,7 @@ export default function Home() {
         setIsLoading(false);
       }
     };
-
+  
     fetchClasses();
   }, []);
 

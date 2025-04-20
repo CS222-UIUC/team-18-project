@@ -18,7 +18,8 @@ def home(request):
 @api_view(["GET", "POST"])
 def classNames(request): 
     gpaFile = p.read_csv(CSV_PATH)
-    return Response(gpaFile["courseName"].to_list())
+    return Response(gpaFile["courseName"].drop_duplicates().tolist())
+    #return Response(['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'])
 #<<<<<<< vaani
 #def minor_progress(request, major):
 # =======
@@ -243,7 +244,7 @@ def minor_progress(request, major):
         + [item for item in inputted_classes if item in ["PHYS 213", "PHYS 214"]][:1]
     )
     
-    gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
+    gpaFile = p.read_csv("../course-catalog.csv")
     #calculate credit hours from electives
     for minor in minors_electives:
         for classes in minors_electives[minor]:
@@ -285,4 +286,5 @@ def minor_progress(request, major):
 def topMinors(minors):
     top3 = sorted(minors.items(), key=lambda x: x[1], reverse=True)[:3]
     return top3
+
 

@@ -1,5 +1,6 @@
 import pandas as p
 import numpy as np
+import os
 
 gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
 
@@ -10,3 +11,5 @@ for val in range(len(gpaFile["Subject"])):
 
 gpaFile["courseName"] = courseName
 gpaFile.to_csv(r".\BackEnd-cs222-project\course-catalog.csv", index=False)
+
+print(gpaFile["courseName"])
