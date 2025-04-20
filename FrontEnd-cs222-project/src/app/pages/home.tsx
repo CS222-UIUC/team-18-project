@@ -19,6 +19,7 @@ export default function Home() {
 
   const [classes, setClasses] = useState<string[]>([]);
   const [classesData, setClassesData] = useState<boolean[]>([]);
+  const [majorData, setMajorData] = useState<boolean[]>([]);
   const [selectedMajor, setSelectedMajor] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -43,11 +44,20 @@ export default function Home() {
     setClassesData(Array(classes.length).fill(false));
   }, [classes]);
 
-  const handleDataFromChild = (childData: boolean[]) => {
+  const handleDataFromChildClasses = (childData: boolean[]) => {
     setClassesData(childData);
     for (let i = 0; i < childData.length; ++i) {
       if (childData[i]) {
         console.log(classes[i]);
+      } 
+    }
+  };
+
+  const handleDataFromChildMajors = (childData : Array<boolean>) => {
+    setMajorData(childData);
+    for (let i = 0; i < childData.length; ++i) {
+      if (childData[i]) {
+        console.log(majors[i]);
       } 
     }
   };
@@ -60,9 +70,49 @@ export default function Home() {
         console.log('Added:', classes[i]);
       }
     }
+    let to_include_majors = Array();
+    for (let i = 0; i < majorData.length; ++i) {
+      if (majorData[i]) {
+        to_include_majors.push(majors[i]);
+        console.log('Added:', majors[i]);
+      }
+    }
     navigate('/secondary');
   };
 
+  
+
+
+  return (<div>
+    <Title/> <Subtitle string={"Please select your major:"}/>
+    <Dropdown 
+      title={"Major"} 
+      words={majors} 
+      sendDataToParent={handleDataFromChildMajors} 
+    /> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChildClasses}/> <button
+  onClick={goToSecondaryPage}
+  style={{
+    color: 'white',
+    backgroundColor: '#E84A27',
+    padding: '12px 24px',
+    border: 'none',
+    borderRadius: '10px',
+    marginTop: '200px',
+    marginLeft: '10px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: '500',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    transition: 'background-color 0.3s ease',
+  }}
+  onMouseEnter={e => ((e.target as HTMLElement).style.backgroundColor = '#13294B')}
+  onMouseLeave={e => ((e.target as HTMLElement).style.backgroundColor = '#E84A27')}
+>
+  Next Page
+</button>
+   </div>
+  )
+  /*
   return (
     <div>
       <Title />
@@ -101,4 +151,5 @@ export default function Home() {
       </button>
     </div>
   );
+  */
 }
