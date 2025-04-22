@@ -1,8 +1,8 @@
-import pandas as p
+import pandas as pd
 import numpy as np
 import os
 
-gpaFile = p.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
+gpaFile = pd.read_csv(r'.\BackEnd-cs222-project\course-catalog.csv')
 inputted_classes = ["CS 128","CS 124", "CS 173"]
 
 percentage_complete = {
@@ -33,7 +33,7 @@ credit_hours = {
 
 minors_required = {
     "Business": ["BADM 310", "BADM 320", "FIN 221"],
-    "Business Analytics": ["BADM 352", "BADM 356", "BADM 358", "BADM 373", "BADM 374"],  # Fixed typo
+    "Business Analytics": ["BADM 352", "BADM 356", "BADM 358", "BADM 373", "BADM 374"], 
     "Technology & Management": [],
     "Computer Science": ["CS 124", "CS 128", "CS 173", "CS 225"],
     "Math": ["MATH 241"],
@@ -75,10 +75,13 @@ for minor in minors_required:
     for cls in common_elements:
         try:
             firstIndex = (gpaFile["courseName"] == cls).idxmax()
+            print(firstIndex)
+            print()
             if not gpaFile["courseName"].eq(cls).any():
                 print(f"Course {cls} not found in CSV")
                 continue
-            creditRow = gpaFile.loc[firstIndex, "creditHours"]
+            creditRow = int ((gpaFile.loc[firstIndex, "Credit Hours"])[0:1])
+            print(creditRow)
             creditRow = int(float(str(creditRow).replace(' hours.', ''))) if pd.notna(creditRow) else 0
             current_credit[minor] += creditRow
         except (KeyError, ValueError) as e:

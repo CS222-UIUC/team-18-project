@@ -132,15 +132,15 @@ def minor_progress(request):
     # ]
     # minors_electives["Technology & Management"] = list(set(minors_required["Technology & Management"]))
 
-    # # Computer Science electives
-    # minors_electives["Computer Science"] = [
-    #     item for item in inputted_classes 
-    #     if (item.startswith("CS 3") or item.startswith("CS 4")) 
-    #     and item not in [
-    #         "CS 397", "CS 398", "CS 400", "CS 401", "CS 402", "CS 403", 
-    #         "CS 413", "CS 491", "CS 492", "CS 493", "CS 494", "CS 497", "CS 499"
-    #     ]
-    # ][:2]
+    # Computer Science electives
+    minors_electives["Computer Science"] = [
+        item for item in inputted_classes 
+        if (item.startswith("CS 3") or item.startswith("CS 4")) 
+        and item not in [
+            "CS 397", "CS 398", "CS 400", "CS 401", "CS 402", "CS 403", 
+            "CS 413", "CS 491", "CS 492", "CS 493", "CS 494", "CS 497", "CS 499"
+        ]
+    ][:2]
 
     # Math electives
     minors_electives["Math"] = [
@@ -259,7 +259,7 @@ def minor_progress(request):
                     if not gpaFile["courseName"].eq(cls).any():
                         print(f"Course {cls} not found in CSV")
                         continue
-                    creditRow = gpaFile.loc[firstIndex, "creditHours"]  # Use creditHours column
+                    creditRow = int ((gpaFile.loc[firstIndex, "Credit Hours"])[0:1])
                     creditRow = int(float(str(creditRow).replace(' hours.', ''))) if pd.notna(creditRow) else 0
                     current_credit[minor] += creditRow
                 except (KeyError, ValueError) as e:
@@ -275,7 +275,7 @@ def minor_progress(request):
                 if not gpaFile["courseName"].eq(cls).any():
                     print(f"Course {cls} not found in CSV")
                     continue
-                creditRow = gpaFile.loc[firstIndex, "creditHours"]
+                creditRow = int ((gpaFile.loc[firstIndex, "Credit Hours"])[0:1])
                 creditRow = int(float(str(creditRow).replace(' hours.', ''))) if pd.notna(creditRow) else 0
                 current_credit[minor] += creditRow
             except (KeyError, ValueError) as e:
