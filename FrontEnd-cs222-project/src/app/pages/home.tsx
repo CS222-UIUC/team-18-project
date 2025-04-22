@@ -82,7 +82,7 @@ export default function Home() {
   };
 
 
-  const goToSecondaryPage = () => {
+  const goToSecondaryPage = async () => {
     const to_include: string[] = [];
     for (let i = 0; i < classesData.length; ++i) {
       if (classesData[i]) {
@@ -97,7 +97,48 @@ export default function Home() {
         console.log('Added:', majors[i]);
       }
     }
-    navigate('/secondary');
+
+    if (to_include_majors.length === 0) {
+      alert("Please select a major before proceeding.");
+      return;
+    }
+    if (to_include_majors.length > 1) {
+      alert("Please select only one major.");
+      return;
+    }
+
+    try {
+      console.log("Sending POST request to http://localhost:8000/api/minor_progress/");
+      const response = await fetch('http://localhost:8000/api/minor_progress/', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          classes: to_include,
+          major: to_include_majors[0],
+        }),
+      });
+
+      console.log("Response status:", response.status, response.statusText);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch minor progress: ${response.status} ${response.statusText} - ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log("Minor progress data:", data);
+
+      navigate('/secondary', { state: { minorData: data } });
+    }
+
+    catch (error) {
+      console.error('Error fetching minor progress:', error);
+      alert("Failed to fetch minor progress data. Please try again.");
+    }
+
   };
 
 

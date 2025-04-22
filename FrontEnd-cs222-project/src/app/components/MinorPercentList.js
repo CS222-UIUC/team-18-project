@@ -1,7 +1,6 @@
-"use client";
 import React from 'react';
 
-function MinorPercentList({minors, percentages}) {
+const MinorPercentList = ({ minors, percentages }) => {
   return (
     <div
       style={{
@@ -14,9 +13,9 @@ function MinorPercentList({minors, percentages}) {
       }}
     >
       <ul style={{ listStyle: "none", padding: 0 }}>
-        {minors.map((word, index) => (
+        {minors.map((minor, index) => (
           <li
-            key={index}
+            key={minor}
             style={{
               margin: "8px 0",
               fontSize: "18px",
@@ -27,13 +26,12 @@ function MinorPercentList({minors, percentages}) {
               boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
             }}
           >
-            Percentage {word} Completed: {percentages[index]}%
+            {minor}: {percentages[index].toFixed(2)}%
           </li>
         ))}
       </ul>
     </div>
   );
-  
-}
+};
 
 export default MinorPercentList;
