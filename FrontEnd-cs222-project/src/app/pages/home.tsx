@@ -10,9 +10,14 @@ export default function Home() {
 
   const majors = ['Aerospace Engineering', 'Agricultural and Biological Engineering', 'Bioengineering', 'Chemical Engineering', 'Civil Engineering', 'Computer Engineering', 'Computer Science', 'Electrical Engineering', 'Engineering Mechanics', 'Engineering Physics', 'Industrial Engineering', 'Materials Science and Engineering', 'Mechanical Engineering', 'Nuclear, Plasma, and Radiological Engineering', 'Systems Engineering and Design', 'Engineering Undeclared']
   const [classes, setClasses] = useState<string[]>([]);
+
   //const classes = ['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'];
   const [isLoading, setIsLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  
+  const [majorData, setMajorData] = useState<boolean[]>([]);
+
   const [selectedMajor, setSelectedMajor] = useState<string | null>(null);
   const [classesData, setClassesData] = useState<boolean[]>([]);
   
@@ -49,6 +54,7 @@ export default function Home() {
   }, []);
 
 
+
   const handleSelect = (major: string) => {
     setSelectedMajor(major);  
     console.log("Selected Major:", major); 
@@ -56,6 +62,25 @@ export default function Home() {
 
 
   //const [classesData, setClassesData] = useState(Array(classes.length).fill(false));
+
+  const handleDataFromChildClasses = (childData: boolean[]) => {
+    setClassesData(childData);
+    for (let i = 0; i < childData.length; ++i) {
+      if (childData[i]) {
+        console.log(classes[i]);
+      } 
+    }
+  };
+
+  const handleDataFromChildMajors = (childData : Array<boolean>) => {
+    setMajorData(childData);
+    for (let i = 0; i < childData.length; ++i) {
+      if (childData[i]) {
+        console.log(majors[i]);
+      } 
+    }
+  };
+
 
   const goToSecondaryPage = () => {
     const to_include: string[] = [];
@@ -65,17 +90,17 @@ export default function Home() {
         console.log('Added:', classes[i]);
       }
     }
+    let to_include_majors = Array();
+    for (let i = 0; i < majorData.length; ++i) {
+      if (majorData[i]) {
+        to_include_majors.push(majors[i]);
+        console.log('Added:', majors[i]);
+      }
+    }
     navigate('/secondary');
   };
 
-  const handleDataFromChild = (childData : Array<boolean>) => {
-    setClassesData(childData);
-    for (let i = 0; i < childData.length; ++i) {
-      if (childData[i]) {
-        console.log(classes[i]);
-      } 
-    }
-  };
+
 
    // Show loading state while fetching classes
   if (isLoading) {
@@ -84,40 +109,73 @@ export default function Home() {
 
 
   return (<div>
-    <Title/> 
-    <Subtitle string={"Please select your major:"}/>
+    <Title/> <Subtitle string={"Please select your major:"}/>
     <Dropdown 
       title={"Major"} 
       words={majors} 
-      sendDataToParent={handleSelect} 
-    /> 
-    <Subtitle string={"Select the classes you've taken:"}/>  
-    <Dropdown 
-      title={"Classes Taken"} 
-      words={classes} 
-      sendDataToParent={handleDataFromChild}
-    /> 
-    <button
-      onClick={goToSecondaryPage}
-      style={{
-        color: 'white',
-        backgroundColor: '#E84A27',
-        padding: '12px 24px',
-        border: 'none',
-        borderRadius: '10px',
-        marginTop: '200px',
-        marginLeft: '10px',
-        cursor: 'pointer',
-        fontSize: '16px',
-        fontWeight: '500',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        transition: 'background-color 0.3s ease',
-      }}
-      onMouseEnter={e => ((e.target as HTMLElement).style.backgroundColor = '#13294B')}
-      onMouseLeave={e => ((e.target as HTMLElement).style.backgroundColor = '#E84A27')}
-    >
-      Next Page
-    </button>
-  </div>
-);
+      sendDataToParent={handleDataFromChildMajors} 
+    /> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChildClasses}/> <button
+  onClick={goToSecondaryPage}
+  style={{
+    color: 'white',
+    backgroundColor: '#E84A27',
+    padding: '12px 24px',
+    border: 'none',
+    borderRadius: '10px',
+    marginTop: '200px',
+    marginLeft: '10px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: '500',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    transition: 'background-color 0.3s ease',
+  }}
+  onMouseEnter={e => ((e.target as HTMLElement).style.backgroundColor = '#13294B')}
+  onMouseLeave={e => ((e.target as HTMLElement).style.backgroundColor = '#E84A27')}
+>
+  Next Page
+</button>
+   </div>
+  )
+  /*
+  return (
+    <div>
+      <Title />
+      <Subtitle string={"Please select your major:"} />
+      <Dropdown 
+        title={"Major"} 
+        words={majors} 
+        sendDataToParent={handleSelect} 
+      />
+      <Subtitle string={"Select the classes you've taken:"} />
+      <Dropdown 
+        title={"Classes Taken"} 
+        words={classes} 
+        sendDataToParent={handleDataFromChild} 
+      />
+      <button
+        onClick={goToSecondaryPage}
+        style={{
+          color: 'white',
+          backgroundColor: '#E84A27',
+          padding: '12px 24px',
+          border: 'none',
+          borderRadius: '10px',
+          marginTop: '200px',
+          marginLeft: '10px',
+          cursor: 'pointer',
+          fontSize: '16px',
+          fontWeight: '500',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          transition: 'background-color 0.3s ease',
+        }}
+        onMouseEnter={e => ((e.target as HTMLElement).style.backgroundColor = '#13294B')}
+        onMouseLeave={e => ((e.target as HTMLElement).style.backgroundColor = '#E84A27')}
+      >
+        Next Page
+      </button>
+    </div>
+  );
+  */
+
 }
