@@ -4,9 +4,6 @@ from rest_framework.response import Response
 import pandas as pd
 import numpy as np
 
-#need to make a post request in frontend and call this function to get the classes data
-#remove chemistry, statistics
-#loop through dictionary and calculate credit hours completed for each minor
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Project root (BackEnd-cs222-project/)
 CSV_PATH = os.path.join(BASE_DIR, 'course-catalog.csv')
@@ -19,10 +16,7 @@ def home(request):
 def classNames(request): 
     gpaFile = pd.read_csv(CSV_PATH)
     return Response(gpaFile["courseName"].drop_duplicates().tolist())
-    #return Response(['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'])
-#<<<<<<< vaani
-#def minor_progress(request, major):
-# =======
+
 
 @api_view(["GET", "POST"])  # Restrict to POST only
 def minor_progress(request):
@@ -36,7 +30,7 @@ def minor_progress(request):
     percentage_complete = {
         "Business": 0,
         "Business Analytics": 0,
-        "Technology & Management": 0,
+        "Biology": 0,
         "Computer Science": 0,
         "Math": 0,
         "Data Science": 0,
@@ -49,7 +43,7 @@ def minor_progress(request):
     credit_hours = {
         "Business": 18,
         "Business Analytics": 18,
-        "Technology & Management": 20,
+        "Biology": 16,
         "Computer Science": 19,
         "Math": 19,
         "Data Science": 21,
@@ -62,7 +56,7 @@ def minor_progress(request):
     minors_required = {
         "Business": ["BADM 310", "BADM 320", "FIN 221"],
         "Business Analytics": ["BADM 352", "BADM 356", "BADM 358", "BADM 373", "BADM 374"],  # Fixed typo
-        "Technology & Management": [],
+        "Biology": [],
         "Computer Science": ["CS 124", "CS 128", "CS 173", "CS 225"],
         "Math": ["MATH 241"],
         "Data Science": ["STAT 107", "STAT 207", "CS 307"],
@@ -75,7 +69,7 @@ def minor_progress(request):
     minors_electives = {
         "Business": [],
         "Business Analytics": [],
-        "Technology & Management": [],
+        "Biology": [],
         "Computer Science": [],
         "Math": [],
         "Data Science": [],
@@ -88,7 +82,7 @@ def minor_progress(request):
     current_credit = {
         "Business": 0,
         "Business Analytics": 0,
-        "Technology & Management": 0,
+        "Biology": 0,
         "Computer Science": 0,
         "Math": 0,
         "Data Science": 0,
@@ -118,19 +112,19 @@ def minor_progress(request):
         ]
     ][:1]
 
-    # # Technology & Management
-    # if "engineering" in major.lower():
-    #     minors_electives["Technology & Management"] = [
-    #         "BADM 365", "ACCY 200", "FIN 221",
-    #     ]
-    # else:
-    #     minors_electives["Technology & Management"] = [
-    #         "MSE 101", "ECE 317", "TAM 201",
-    #     ]
-    # minors_electives["Technology & Management"] += [
-    #     "TMGT 367", "TMGT 366", "TMGT 460", "TMGT 461",
-    # ]
-    # minors_electives["Technology & Management"] = list(set(minors_required["Technology & Management"]))
+    # Biology
+    minors_electives["Biology"] = [
+        item for item in inputted_classes if item in [
+            "IB 150", "IB 103", "IB 104"
+        ][:1]  
+    ] + [
+        item for item in inputted_classes if item in [
+            "IB 202", "IB 203", "IB 204", "IB 302"
+        ][:2]  
+    ] + [
+        item for item in inputted_classes if item.startswith("IB 3") or item.startswith("IB 4")
+    ][:2]
+    
 
     # Computer Science electives
     minors_electives["Computer Science"] = [
