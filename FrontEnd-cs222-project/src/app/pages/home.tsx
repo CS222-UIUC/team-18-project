@@ -23,6 +23,15 @@ export default function Home() {
 
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [classesData, setClassesData] = useState<boolean[]>([]);
+
+  const [currentClasses, setCurrentClasses] = useState<string[]>([]);
+  const [selectedCurrentClasses, setSelectedCurrentClasses] = useState<boolean[]>([]);
+  const [offset, setOffset] = useState<number | null>(null);
+  const [endOffset, setEndOffset] = useState<number | null>(null);
+
+  let closeClasses = function() {};
+
+
   
   const navigate = useNavigate();
 
@@ -85,18 +94,63 @@ export default function Home() {
   const handleSelect = (subject: string) => {
     setSelectedSubject(subject);  
     console.log("Selected subject:", subject); 
+    console.log("Subject length:", subject.length);
+    var changedClasses : string[] = [];
+    var changedSelectedClasses : boolean[] = [];
+    var changedOffset : number = -1;
+    var changedEndOffset : number = -1;
+    if (subject != null) {
+      for (let i = 0; i < classes.length; ++i) {
+        if (classes[i].substring(0, subject.length) == subject && classes[i].substring(subject.length, subject.length+1) == " ") {
+          changedOffset = i;
+          console.log("ChangedOffset:", changedOffset);
+          while (i < classes.length && classes[i].substring(0, subject.length) == subject && classes[i].substring(subject.length, subject.length+1) == " ") {
+            changedClasses.push(classes[i]);
+            changedSelectedClasses.push(classesData[i]);
+            ++i;
+          }
+          changedEndOffset = i;
+          console.log("ChangedEndOffset:", changedEndOffset);
+          break;
+        }
+      }
+    }
+    setCurrentClasses(changedClasses);
+    setSelectedCurrentClasses(changedSelectedClasses);
+    setOffset(changedOffset);
+    setEndOffset(changedEndOffset);
+
+    closeClasses();
+
+    console.log("Offset:", offset);
+    console.log("EndOffset:", endOffset);
+    console.log("ChangedClasses", currentClasses);
+    console.log("SelectedClasses", selectedCurrentClasses);
   };
 
 
   //const [classesData, setClassesData] = useState(Array(classes.length).fill(false));
 
   const handleDataFromChildClasses = (childData: boolean[]) => {
-    setClassesData(childData);
-    for (let i = 0; i < childData.length; ++i) {
-      if (childData[i]) {
-        console.log(classes[i]);
-      } 
+    //setClassesData(childData);
+    if (offset != null && offset != -1 && endOffset != null) {
+      var newClassesData = classesData;
+      var j : number = 0;
+      for (let i = offset; i < classes.length && i < endOffset; ++i) {
+        newClassesData[i] = childData[j];
+        ++j;
+      }
+      setClassesData(newClassesData);
     }
+    //for (let i = 0; i < childData.length; ++i) {
+    //  if (childData[i]) {
+    //    console.log(classes[i]);
+    //  } 
+    //}
+  };
+
+  const getClose = (childFunction : () => {}) => {
+    closeClasses = childFunction;
   };
   // const handleDataFromChildSubjects = (childData: boolean[]) => {
   //   setSubjectData(childData);
@@ -188,13 +242,15 @@ export default function Home() {
     <Dropdown 
       title={"Major"} 
       words={majors} 
+      close={() => {}}
+      initial={Array(majors.length).fill(false)}
       sendDataToParent={handleDataFromChildMajors} 
     /> <Subtitle string={"Select your subjects:"} />
     <MajorDropdown 
       title={"Subjects"} 
       options = {subjects}
       handleSelect={handleSelect}
-    /><Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChildClasses}/> <button
+    /><Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={currentClasses} initial={selectedCurrentClasses} close={getClose} sendDataToParent={handleDataFromChildClasses}/> <button
   onClick={goToSecondaryPage}
   style={{
     color: 'white',
