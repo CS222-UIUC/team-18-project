@@ -15,4 +15,5 @@ urlpatterns = [
     path('', backend.home, name='home'),
     path('api/classNames/', backend.classNames, name='classNames'),
     path('api/minor_progress/', backend.minor_progress, name='minor_progress'),
+    path('api/subjectNames/', backend.subjectNames, name='subjectNames'),
 ]
