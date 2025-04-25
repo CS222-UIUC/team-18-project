@@ -5,15 +5,12 @@ import Dropdown from "../components/Dropdown.js";
 import Subtitle from '../components/subtitle2.js';
 import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
-import MajorDropdown from '../components/majorDropdown.js';
+
 export default function Home() {
 
   const majors = ['Aerospace Engineering', 'Agricultural and Biological Engineering', 'Bioengineering', 'Chemical Engineering', 'Civil Engineering', 'Computer Engineering', 'Computer Science', 'Electrical Engineering', 'Engineering Mechanics', 'Engineering Physics', 'Industrial Engineering', 'Materials Science and Engineering', 'Mechanical Engineering', 'Nuclear, Plasma, and Radiological Engineering', 'Systems Engineering and Design', 'Engineering Undeclared']
   const [classes, setClasses] = useState<string[]>([]);
 
-  const [subjects, setSubjects] = useState<string[]>([]);
-  // const [subjectData, setSubjectData] = useState<boolean[]>([]);
-  
   //const classes = ['BADM 310', 'BADM 320', 'FIN 221', 'CS 124', 'CS 128', 'CS 173', 'CS 225', 'MATH 241', 'STAT 107', 'STAT 207', 'CS 307', 'ECOn 102', 'ECON 202', 'ECON 203', 'ECON 302', 'CMN 102', 'SPAN 228', 'PHYS 211', 'PHYS 212', 'PHYS 225', 'PHYS 325'];
   const [isLoading, setIsLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -21,7 +18,7 @@ export default function Home() {
   
   const [majorData, setMajorData] = useState<boolean[]>([]);
 
-  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [selectedMajor, setSelectedMajor] = useState<string | null>(null);
   const [classesData, setClassesData] = useState<boolean[]>([]);
   
   const navigate = useNavigate();
@@ -52,39 +49,15 @@ export default function Home() {
         setIsLoading(false);
       }
     };
-    const fetchSubjects = async () => {
-      try {
-        console.log("Fetching subjects from http://localhost:8000/api/subjectNames/");
-        const response = await fetch('http://localhost:8000/api/subjectNames/', {
-          mode: 'cors',
-          headers: {
-            'Accept': 'application/json',
-          },
-        });
   
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Failed to fetch subjects: ${response.status} ${response.statusText} - ${errorText}`);
-        }
-  
-        const data = await response.json();
-        console.log("Fetched subjects:", data);
-        setSubjects(data);
-        // setSubjectData(Array(data.length).fill(false));
-      } catch (error) {
-        console.error('Error fetching subjects:', error);
-      }
-    };
     fetchClasses();
-    fetchSubjects();
   }, []);
-  
 
 
 
-  const handleSelect = (subject: string) => {
-    setSelectedSubject(subject);  
-    console.log("Selected subject:", subject); 
+  const handleSelect = (major: string) => {
+    setSelectedMajor(major);  
+    console.log("Selected Major:", major); 
   };
 
 
@@ -98,14 +71,7 @@ export default function Home() {
       } 
     }
   };
-  // const handleDataFromChildSubjects = (childData: boolean[]) => {
-  //   setSubjectData(childData);
-  //   for (let i = 0; i < childData.length; ++i) {
-  //     if (childData[i]) {
-  //       console.log(subjects[i]);
-  //     }
-  //   }
-  // };
+
   const handleDataFromChildMajors = (childData : Array<boolean>) => {
     setMajorData(childData);
     for (let i = 0; i < childData.length; ++i) {
@@ -189,12 +155,7 @@ export default function Home() {
       title={"Major"} 
       words={majors} 
       sendDataToParent={handleDataFromChildMajors} 
-    /> <Subtitle string={"Select your subjects:"} />
-    <MajorDropdown 
-      title={"Subjects"} 
-      options = {subjects}
-      handleSelect={handleSelect}
-    /><Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChildClasses}/> <button
+    /> <Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={classes} sendDataToParent={handleDataFromChildClasses}/> <button
   onClick={goToSecondaryPage}
   style={{
     color: 'white',
