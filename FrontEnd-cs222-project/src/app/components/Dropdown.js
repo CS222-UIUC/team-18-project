@@ -32,9 +32,13 @@ import DropdownItem from "./DropdownItem.js";
 
 
 
-function Dropdown({ title , words, sendDataToParent }) {
+function Dropdown({ title , words, initial, sendDataToParent, close}) {
   const [open, setOpen] = useState(false);
-  const [checkedState, setChecked] = useState(Array(words.length).fill(false));
+  const [checkedState, setChecked] = useState(initial);
+  
+  //setChecked(initial);
+  
+  //const [checkedState, setChecked] = useState(initial);
   //const [start, setStart] = useState(true);
 
   // var checked_or_not = [];
@@ -44,6 +48,10 @@ function Dropdown({ title , words, sendDataToParent }) {
   //   checked_or_not.push(count);
   //   count = !count;
   // }
+
+  const closeBox = () => {
+    setOpen(false);
+  }
 
   const toggleCheck = (index) => {
     const updated = [...checkedState];
@@ -57,6 +65,8 @@ function Dropdown({ title , words, sendDataToParent }) {
     //   checked_or_not[i] = true;
     // }
     setOpen(prevOpen => !(prevOpen));
+    setChecked(initial);
+    close(closeBox);
   };
 
 
