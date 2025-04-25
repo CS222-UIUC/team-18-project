@@ -17,6 +17,10 @@ def classNames(request):
     gpaFile = pd.read_csv(CSV_PATH)
     return Response(gpaFile["courseName"].drop_duplicates().tolist())
 
+@api_view(["GET", "POST"])
+def subjectNames(request): 
+    gpaFile = pd.read_csv(CSV_PATH)
+    return Response(gpaFile["Subject"].dropna().drop_duplicates().tolist())
 
 @api_view(["GET", "POST"])  # Restrict to POST only
 def minor_progress(request):
