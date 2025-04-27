@@ -60,7 +60,7 @@ function MajorDropdown({ title, options, handleSelect }) {
               maxHeight: "200px",
               overflowY: "auto",
               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-              zIndex: 200,
+              zIndex: 300,
               fontFamily: "Arial, sans-serif"
             }}
           >
