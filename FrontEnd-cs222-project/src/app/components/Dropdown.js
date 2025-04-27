@@ -110,7 +110,7 @@ function Dropdown({ title , words, initial, sendDataToParent, close}) {
               borderRadius: "5px",
               position: "absolute",
               width: "100%",
-              zIndex: 0,
+              zIndex: "1",
             }}
           >
             {words.map((word, index) => (
