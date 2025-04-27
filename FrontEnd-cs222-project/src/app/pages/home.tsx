@@ -86,6 +86,7 @@ export default function Home() {
     };
     fetchClasses();
     fetchSubjects();
+    setMajorData(Array(majors.length).fill(false));
   }, []);
   
 
@@ -141,6 +142,7 @@ export default function Home() {
         ++j;
       }
       setClassesData(newClassesData);
+      setSelectedCurrentClasses(childData);
     }
     //for (let i = 0; i < childData.length; ++i) {
     //  if (childData[i]) {
@@ -243,8 +245,8 @@ export default function Home() {
       title={"Major"} 
       words={majors} 
       close={() => {}}
-      initial={Array(majors.length).fill(false)}
-      sendDataToParent={handleDataFromChildMajors} 
+      initial={majorData}
+      sendDataToParent={handleDataFromChildMajors}
     /> <Subtitle string={"Select your subjects:"} />
     <MajorDropdown 
       title={"Subjects"} 

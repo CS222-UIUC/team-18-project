@@ -3,7 +3,7 @@ import CheckBox from "./CheckBox.js";
 
 
 
-const DropdownItem = ({word, isChecked, onToggle}) => {
+const DropdownItem = ({word, isChecked, onToggle, zIndexMain}) => {
   
     return ( 
       <span 
@@ -17,6 +17,7 @@ const DropdownItem = ({word, isChecked, onToggle}) => {
         backgroundColor: "#fff",
         cursor: "pointer",
         transition: "background-color 0.2s, coluseStateor 0.2s",
+        zIndex: 4,
       }}>
         {word} {"\u00A0"} {"\u00A0"} 
         <CheckBox checked={isChecked} onToggle = {onToggle} />

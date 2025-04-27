@@ -20,7 +20,7 @@ function MajorDropdown({ title, options, handleSelect }) {
       justifyContent: "center", 
       margin: "20px 0",
       position: "relative", 
-      zIndex: 100
+      zIndex: 30
     }}>
       <div style={{ width: "400px" }}>
         {/* Trigger Button */}

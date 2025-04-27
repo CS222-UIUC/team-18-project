@@ -110,11 +110,11 @@ function Dropdown({ title , words, initial, sendDataToParent, close}) {
               borderRadius: "5px",
               position: "absolute",
               width: "100%",
-              zIndex: "1",
+              zIndex: 0,
             }}
           >
             {words.map((word, index) => (
-              <li key={index} style={{ margin: "0" }}>
+              <li key={index} style={{ margin: "0",}}>
                 <DropdownItem 
                   word={word} 
                   isChecked = {checkedState[index]}
