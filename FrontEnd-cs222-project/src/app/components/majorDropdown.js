@@ -22,12 +22,13 @@ function MajorDropdown({ title, options, handleSelect }) {
       position: "relative", 
       zIndex: 100
     }}>
-      <div style={{ width: "400px" }}>
+      <div style={{position: "relative", display: "inline-block", width: "250px" }}>
         {/* Trigger Button */}
         <div
           onClick={handleClick}
           style={{
             padding: "10px 20px",
+            alignItems: "center",
             border: "1px solid #ccc",
             borderRadius: "5px",
             backgroundColor: "#13294B",
@@ -38,6 +39,7 @@ function MajorDropdown({ title, options, handleSelect }) {
             textAlign: "center",
             fontSize: "16px",
             fontFamily: "Arial, sans-serif",
+            align: "center",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             transition: "background-color 0.2s ease"
           }}
@@ -61,7 +63,19 @@ function MajorDropdown({ title, options, handleSelect }) {
               overflowY: "auto",
               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
               zIndex: 300,
-              fontFamily: "Arial, sans-serif"
+              fontFamily: "Arial, sans-serif",  
+
+
+              //display: "flex",
+              alignItems: "center",
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              color: "#333",
+              
+             
+              cursor: "pointer",
+              transition: "background-color 0.2s, coluseStateor 0.2s",
+            
             }}
           >
             {options.map((option, idx) => (
