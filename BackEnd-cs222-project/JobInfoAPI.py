@@ -41,12 +41,3 @@ def get_keywords_for_major(major):
     }
     
     return major_keywords_map.get(major, [])  # Return an empty list if the major is not found
-
-# Example
-major = "Computer Science"
-minor = "Mathematics"
-career_choices = get_career_choices_for_major_minor(major, minor)
-
-for job in career_choices:
-    print(job['title'], job['location'], job['company']['display_name'])
-
