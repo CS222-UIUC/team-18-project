@@ -32,89 +32,65 @@ export default function Secondary({refresh = 0}) {
   const percentages = Object.values(minorData.percentages);
   const minors = Object.keys(minorData.percentages);
   return (
-    <div style={{ color: 'black' }}>
-      <Title />
-      <Subtitle string={"Here Is Your Recommended Minor Data:"} />
+    <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-[#13294B] to-[#E84A27] h-2 w-full"></div>
+        
+        <div className="p-10 space-y-10">
+          {/* Header */}
+          <div className="text-center space-y-3">
+            <h1 className="text-3xl font-bold text-[#13294B]">
+              Recommended Minor Data
+            </h1>
+            <p className="text-lg text-[#E84A27] font-medium">
+              Based on your completed courses
+            </p>
+          </div>
   
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        {minors.map((minor, index) => {
-          const percentage = percentages[index];
-          let bgColor = '#FF6F61';  // Lighter grey for below 40%
-          
-          if (Number(percentage) >= 70) {
-            bgColor = '#4CAF50'; // Softer green
-          } else if (Number(percentage) >= 40) {
-            bgColor = '#FFEB3B'; // Softer yellow
-          }
+          {/* Progress Bars */}
+          <div className="space-y-6">
+            {minors.map((minor, index) => {
+              const percentage = percentages[index];
+              let bgColor = '#FF6F61'; // Coral for <40%
+              
+              if (Number(percentage) >= 70) {
+                bgColor = '#4CAF50'; // Green
+              } else if (Number(percentage) >= 40) {
+                bgColor = '#FFC107'; // Amber
+              }
   
-          return (
-            <div
-              key={index}
-              style={{
-                position: 'relative',
-                width: '80%',  // Limit bar width to 80% of container
-                height: '40px',
-                border: '1px solid #ccc',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                backgroundColor: '#f0f0f0',
-                margin: '0 auto', // Center the bars
-              }}
-            >
-              <div
-                style={{
-                  width: `${percentage}%`,
-                  height: '100%',
-                  backgroundColor: bgColor,
-                  transition: 'width 0.5s ease',
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  height: '100%',
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  paddingLeft: '12px',
-                  fontWeight: '500',
-                  color: 'black',
-                }}
-              >
-                {minor}: {Number(percentage).toFixed(2)}%  {/* Truncated to 2 decimals */}
-              </div>
-            </div>
-          );
-        })}
+              return (
+                <div key={index} className="space-y-2">
+                  <div className="flex justify-between px-1">
+                    <span className="font-medium text-[#13294B]">{minor}</span>
+                    <span className="font-semibold text-[#374151]">  {/* Equivalent to gray-700 */}{Number(percentage).toFixed(2)}%</span>
+                  </div>
+                  <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full rounded-full transition-all duration-500 ease-out"
+                      style={{
+                        width: `${percentage}%`,
+                        backgroundColor: bgColor
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+  
+          {/* Back Button */}
+          <button
+            onClick={goToHomePage}
+            className="mt-12 w-full max-w-xs mx-auto py-3 px-6 bg-gradient-to-r from-[#E84A27] to-[#13294B] text-white font-semibold rounded-xl hover:shadow-xl hover:brightness-110 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2"
+          >
+            <span>Back to Home</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
       </div>
-  
-      <button
-        onClick={goToHomePage}
-        style={{
-          color: 'white',
-          backgroundColor: '#E84A27',
-          padding: '12px 24px',
-          border: 'none',
-          borderRadius: '10px',
-          marginTop: '200px',
-          marginLeft: '10px',
-          cursor: 'pointer',
-          fontSize: '16px',
-          fontWeight: '500',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          transition: 'background-color 0.3s ease',
-        }}
-        onMouseEnter={e =>
-          ((e.target as HTMLElement).style.backgroundColor = '#13294B')
-        }
-        onMouseLeave={e =>
-          ((e.target as HTMLElement).style.backgroundColor = '#E84A27')
-        }
-      >
-        Back
-      </button>
     </div>
-  );
+  );  
 }
