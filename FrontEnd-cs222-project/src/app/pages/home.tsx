@@ -30,6 +30,7 @@ export default function Home() {
   const [endOffset, setEndOffset] = useState<number | null>(null);
 
   let closeClasses = function() {};
+  let first = true;
 
 
   
@@ -116,12 +117,13 @@ export default function Home() {
         }
       }
     }
+
     setCurrentClasses(changedClasses);
     setSelectedCurrentClasses(changedSelectedClasses);
     setOffset(changedOffset);
     setEndOffset(changedEndOffset);
 
-    closeClasses();
+    
 
     console.log("Offset:", offset);
     console.log("EndOffset:", endOffset);
@@ -151,9 +153,6 @@ export default function Home() {
     //}
   };
 
-  const getClose = (childFunction : () => {}) => {
-    closeClasses = childFunction;
-  };
   // const handleDataFromChildSubjects = (childData: boolean[]) => {
   //   setSubjectData(childData);
   //   for (let i = 0; i < childData.length; ++i) {
@@ -244,7 +243,6 @@ export default function Home() {
     <Dropdown 
       title={"Major"} 
       words={majors} 
-      close={() => {}}
       initial={majorData}
       sendDataToParent={handleDataFromChildMajors}
     /> <Subtitle string={"Select your subjects:"} />
@@ -252,7 +250,7 @@ export default function Home() {
       title={"Subjects"} 
       options = {subjects}
       handleSelect={handleSelect}
-    /><Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={currentClasses} initial={selectedCurrentClasses} close={getClose} sendDataToParent={handleDataFromChildClasses}/> <button
+    /><Subtitle string={"Select the classes you've taken:"}/>  <Dropdown title={"Classes Taken"} words={currentClasses} initial={selectedCurrentClasses}  sendDataToParent={handleDataFromChildClasses}/> <button
   onClick={goToSecondaryPage}
   style={{
     color: 'white',
