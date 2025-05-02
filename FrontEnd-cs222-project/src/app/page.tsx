@@ -13,6 +13,8 @@ import Secondary from './pages/secondary.tsx';
 //import { useNavigate } from 'react-router-dom';
 import Home from './pages/home.tsx';
 
+import Jobs from './pages/Jobs.tsx';
+
 const Page = () => {
   //return (<Home />);
 
@@ -34,7 +36,7 @@ const Page = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/secondary" element={<Secondary refresh={0}/>} />
-        <Route path="*" element={<Home />} />
+        <Route path="/jobs" element={<Jobs />} />
       </Routes>
     </BrowserRouter>
     </div>

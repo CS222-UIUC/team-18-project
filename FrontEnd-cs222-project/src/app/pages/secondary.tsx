@@ -1,24 +1,17 @@
-// import Image from "next/image";
 "use client";
 import Title from "../components/Title.js";
-//import Dropdown from "../components/Dropdown.js";
 import Subtitle from '../components/subtitle2.js';
-//import MajorDropdown from "../components/majorDropdown.js";
-//import LinkButton from "../components/LinkButton.js";
-import React, { useEffect} from 'react'; 
-//import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react'; 
 import { useNavigate, useLocation } from 'react-router-dom';
 import MinorPercentList from "../components/MinorPercentList.js";
 
-
-export default function Secondary({refresh = 0}) {
-
+export default function Secondary({ refresh = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   const goToHomePage = () => {
     navigate('/');
-  }
+  };
 
   useEffect(() => {
     if (refresh > 0) {
@@ -26,11 +19,20 @@ export default function Secondary({refresh = 0}) {
     }
   }, [refresh, goToHomePage]);
 
-  // const minors = ['Business', 'Business Analytics', 'Technology & Management', 'Computer Science', 'Math', 'Data Science', 'Economics', 'Statistics', 'Spanish', 'Physics'];
-  // const percentages = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
-  const minorData = location.state?.minorData || { percentages: {}, top_minors: [] };
+  // Extract both minorData and selectedMajor from location.state
+  const { minorData = { percentages: {}, top_minors: [] }, selectedMajor = "" } = location.state || {};
   const percentages = Object.values(minorData.percentages);
   const minors = Object.keys(minorData.percentages);
+
+  const handleMinorClick = (minor: string) => {
+    console.log(`Clicked on minor: ${minor}, selectedMajor: ${selectedMajor}`);
+    if (!selectedMajor) {
+      console.error("No major selected. Navigation aborted.");
+      return;
+    }
+    navigate('/jobs', { state: { major: selectedMajor, minor } });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
@@ -46,7 +48,7 @@ export default function Secondary({refresh = 0}) {
               Based on your completed courses
             </p>
           </div>
-  
+
           {/* Progress Bars */}
           <div className="space-y-6">
             {minors.map((minor, index) => {
@@ -58,12 +60,17 @@ export default function Secondary({refresh = 0}) {
               } else if (Number(percentage) >= 40) {
                 bgColor = '#FFC107'; // Amber
               }
-  
+
               return (
                 <div key={index} className="space-y-2">
                   <div className="flex justify-between px-1">
-                    <span className="font-medium text-[#13294B]">{minor}</span>
-                    <span className="font-semibold text-[#374151]">  {/* Equivalent to gray-700 */}{Number(percentage).toFixed(2)}%</span>
+                    <span 
+                      className="font-medium text-[#13294B] cursor-pointer hover:underline"
+                      onClick={() => handleMinorClick(minor)}
+                    >
+                      {minor}
+                    </span>
+                    <span className="font-semibold text-[#374151]">{Number(percentage).toFixed(2)}%</span>
                   </div>
                   <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden">
                     <div 
@@ -78,7 +85,7 @@ export default function Secondary({refresh = 0}) {
               );
             })}
           </div>
-  
+
           {/* Back Button */}
           <button
             onClick={goToHomePage}

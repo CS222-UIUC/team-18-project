@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import pandas as pd
 import numpy as np
+from JobInfoAPI import get_career_choices_for_major_minor
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Project root (BackEnd-cs222-project/)
@@ -22,7 +23,22 @@ def subjectNames(request):
     gpaFile = pd.read_csv(CSV_PATH)
     return Response(gpaFile["Subject"].dropna().drop_duplicates().tolist())
 
-@api_view(["GET", "POST"])  # Restrict to POST only
+@api_view(["GET", "POST"])
+def job_recommendations(request):
+    major = request.data.get("major", "")
+    minor = request.data.get("minor", "")
+    
+    if not major or not minor:
+        return Response({"error": "Missing required fields: 'major' and 'minor'"}, status=400)
+    
+    try:
+        jobs = get_career_choices_for_major_minor(major, minor, results_per_page=5)
+        return Response({"jobs": jobs})
+    except Exception as e:
+        print(f"Error fetching job recommendations: {e}")
+        return Response({"error": "Failed to fetch job recommendations"}, status=500)
+    
+@api_view(["GET", "POST"])  
 def minor_progress(request):
     # Variables
     inputted_classes = request.data.get("classes", [])
@@ -292,5 +308,3 @@ def minor_progress(request):
 # def topMinors(minors):
 #     top3 = sorted(minors.items(), key=lambda x: x[1], reverse=True)[:3]
 #     return top3
-
-
