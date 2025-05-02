@@ -115,7 +115,10 @@ function Dropdown({ title , words, initial, sendDataToParent}) {
               borderRadius: "5px",
               position: "absolute",
               width: "100%",
-              zIndex: "1",
+              zIndex: "300",
+              maxHeight: "200px",
+              overflowY: "auto",
+              scrollbarWidth: "thin",
             }}
           >
             {words.map((word, index) => (

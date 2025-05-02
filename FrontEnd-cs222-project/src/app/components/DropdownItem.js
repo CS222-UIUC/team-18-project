@@ -17,6 +17,7 @@ const DropdownItem = ({word, isChecked, onToggle}) => {
         backgroundColor: "#fff",
         cursor: "pointer",
         transition: "background-color 0.2s, coluseStateor 0.2s",
+        zIndex: 300,
       }}>
         {word} {"\u00A0"} {"\u00A0"} 
         <CheckBox checked={isChecked} onToggle = {onToggle} />
