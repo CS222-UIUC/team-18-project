@@ -52,6 +52,5 @@ Extras: Axios, shadcn/ui, Vite (optional)
 ## 📬 Contact
 
 ```txt
-Made with 💙 by a UIUC student.  
-Have feedback or want to build on it? Feel free to reach out!
+Have feedback or want to build on it? Feel free to reach out to ___!
 ```
