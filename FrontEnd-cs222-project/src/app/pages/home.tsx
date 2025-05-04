@@ -21,6 +21,7 @@ export default function Home() {
   const [endOffset, setEndOffset] = useState<number | null>(null);
 
   let closeClasses = function() {};
+  let first = true;
 
   const navigate = useNavigate();
 
@@ -72,6 +73,7 @@ export default function Home() {
     };
     fetchClasses();
     fetchSubjects();
+    setMajorData(Array(majors.length).fill(false));
   }, []);
 
   const handleSelect = (subject: string) => {
@@ -98,12 +100,13 @@ export default function Home() {
         }
       }
     }
+
     setCurrentClasses(changedClasses);
     setSelectedCurrentClasses(changedSelectedClasses);
     setOffset(changedOffset);
     setEndOffset(changedEndOffset);
 
-    closeClasses();
+    
 
     console.log("Offset:", offset);
     console.log("EndOffset:", endOffset);
@@ -120,12 +123,10 @@ export default function Home() {
         ++j;
       }
       setClassesData(newClassesData);
+      setSelectedCurrentClasses(childData);
     }
   };
 
-  const getClose = (childFunction : () => {}) => {
-    closeClasses = childFunction;
-  };
 
   const handleDataFromChildMajors = (childData : Array<boolean>) => {
     setMajorData(childData);
@@ -198,6 +199,7 @@ export default function Home() {
   if (isLoading) {
     return <div>Loading classes...</div>;
   }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
