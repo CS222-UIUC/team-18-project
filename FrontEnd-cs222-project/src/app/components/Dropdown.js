@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 // import Image from "next/image";
 //import CheckBox from "./CheckBox.js";
 import DropdownItem from "./DropdownItem.js";
@@ -32,11 +32,20 @@ import DropdownItem from "./DropdownItem.js";
 
 
 
-function Dropdown({ title , words, initial, sendDataToParent, close}) {
+function Dropdown({ title , words, initial, sendDataToParent}) {
   const [open, setOpen] = useState(false);
   const [checkedState, setChecked] = useState(initial);
   
   //setChecked(initial);
+
+  useEffect(() => {
+    setOpen(false);
+    setChecked(initial);
+  }, []);
+
+  if (open && initial != checkedState) {
+    setChecked(initial);
+  }
   
   //const [checkedState, setChecked] = useState(initial);
   //const [start, setStart] = useState(true);
@@ -49,9 +58,6 @@ function Dropdown({ title , words, initial, sendDataToParent, close}) {
   //   count = !count;
   // }
 
-  const closeBox = () => {
-    setOpen(false);
-  }
 
   const toggleCheck = (index) => {
     const updated = [...checkedState];
@@ -66,7 +72,6 @@ function Dropdown({ title , words, initial, sendDataToParent, close}) {
     // }
     setOpen(prevOpen => !(prevOpen));
     setChecked(initial);
-    close(closeBox);
   };
 
 
@@ -117,7 +122,7 @@ function Dropdown({ title , words, initial, sendDataToParent, close}) {
             }}
           >
             {words.map((word, index) => (
-              <li key={index} style={{ margin: "0" }}>
+              <li key={index} style={{ margin: "0",}}>
                 <DropdownItem 
                   word={word} 
                   isChecked = {checkedState[index]}
