@@ -232,7 +232,7 @@ export default function Home() {
               words={majors}
               sendDataToParent={handleDataFromChildMajors}
               className="border-2 border-[#E84A27]/30 hover:border-[#13294B] transition-colors p-4 rounded-xl"
-              initial={Array(majors.length).fill(false)}
+              initial={majorData}
             />
           </div>
 
