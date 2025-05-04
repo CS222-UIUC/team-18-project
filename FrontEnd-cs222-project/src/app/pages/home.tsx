@@ -201,11 +201,110 @@ export default function Home() {
   }
 
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl relative overflow-visible p-8">
-        <div className="bg-gradient-to-r from-[#13294B] to-[#E84A27] h-2 w-full"></div>
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
+//       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl relative overflow-visible p-8">
+//         <div className="bg-gradient-to-r from-[#13294B] to-[#E84A27] h-2 w-full"></div>
         
+//         <div className="p-10 space-y-10">
+//           {/* Header */}
+//           <div className="text-center space-y-3 mb-8">
+//             <div className="inline-block bg-[#13294B]/10 px-6 py-3 rounded-full">
+//               <h1 className="text-3xl font-bold text-[#13294B]">
+//                 Illini Minor Planner
+//               </h1>
+//             </div>
+//             <p className="text-lg text-[#E84A27] font-medium">
+//               Configure Your Academic Pathway
+//             </p>
+//           </div>
+
+//           {/* Major Selection */}
+//           <div className="space-y-4">
+//             <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
+//               <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+//                 1
+//               </span>
+//               <span>Major</span>
+//             </h2>
+//             <Dropdown 
+//               title="Select Your Major" 
+//               words={majors}
+//               sendDataToParent={handleDataFromChildMajors}
+//               className="border-2 border-[#E84A27]/30 hover:border-[#13294B] transition-colors p-4 rounded-xl"
+//               initial={Array(majors.length).fill(false)}
+//             />
+//           </div>
+
+//           {/* Course Selection */}
+//           <div className="space-y-4">
+//             <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
+//               <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+//                 2
+//               </span>
+//               <span>Subjects</span>
+//             </h2>
+//             <MajorDropdown
+//               title="Select Your Subjects"
+//               options={subjects}
+//               handleSelect={handleSelect}
+//               className="border-2 border-[#E84A27]/30 hover:border-[#13294B] transition-colors p-4 rounded-xl"
+//             />
+//           </div>
+
+//           {/* Completed Classes */}
+//           <div className="space-y-4" style={{ position: "relative", display: "inline-block", width: "100%" }}>
+//             <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
+//               <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+//                 3
+//               </span>
+//               <span>Completed Courses</span>
+//             </h2>
+//             <Dropdown
+//               title="Select Completed Courses"
+//               words={currentClasses}
+//               initial={selectedCurrentClasses}
+//               sendDataToParent={handleDataFromChildClasses}
+//               className="border-2 border-[#E84A27]/30 hover:border-[#13294B] transition-colors p-4 rounded-xl"
+//             />
+//           </div>
+
+//           {/* Continue Button */}
+//           <button
+//             onClick={goToSecondaryPage}
+//             className="mt-12 w-full max-w-xs mx-auto py-4 px-6 bg-gradient-to-r from-[#E84A27] to-[#13294B] text-white font-semibold rounded-xl hover:shadow-xl hover:brightness-110 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2"
+//           >
+//             <span>Continue Academic Planning</span>
+//             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+//               <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+//             </svg>
+//           </button>
+//         </div>
+//       </div>
+//           <div className="mt-10 space-y-2">
+//       <h2 className="text-xl font-semibold text-[#13294B]">Selected Courses:</h2>
+//       {classes.filter((_, i) => classesData[i]).length > 0 ? (
+//         <ul className="list-disc list-inside text-gray-700">
+//           {classes.map((course, i) =>
+//             classesData[i] ? <li key={i}>{course}</li> : null
+//           )}
+//         </ul>
+//       ) : (
+//         <p className="text-gray-500 italic">No courses selected yet.</p>
+//       )}
+//     </div>
+//     </div>
+//   );
+// }
+return (
+  <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
+
+    <div className="flex gap-6"> 
+
+      {/* === MAIN WHITE BUBBLE === */}
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl relative overflow-visible p-8 flex-1">
+        <div className="bg-gradient-to-r from-[#13294B] to-[#E84A27] h-2 w-full"></div>
+
         <div className="p-10 space-y-10">
           {/* Header */}
           <div className="text-center space-y-3 mb-8">
@@ -253,7 +352,7 @@ export default function Home() {
           </div>
 
           {/* Completed Classes */}
-          <div className="space-y-4" style={{ position: "relative", display: "inline-block", width: "100%" }}>
+          <div className="space-y-4 ml-0" style={{ position: "relative", display: "inline-block", width: "100%" }}>
             <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
               <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
                 3
@@ -281,6 +380,22 @@ export default function Home() {
           </button>
         </div>
       </div>
-    </div>
-  );
+
+      
+      <div className="bg-white rounded-3xl shadow-xl p-6 w-80 h-fit self-start">
+        <h2 className="text-3xl font-semibold text-[#13294B] mb-4">Selected Courses</h2>
+        {classes.filter((_, i) => classesData[i]).length > 0 ? (
+          <ul className="list-disc list-inside text-gray-700 space-y-1 text-lg">
+            {classes.map((course, i) =>
+              classesData[i] ? <li key={i}>{course}</li> : null
+            )}
+          </ul>
+        ) : (
+          <p className="text-gray-700 italic text-sm">No courses selected yet.</p>
+        )}
+      </div>
+
+    </div> 
+  </div>
+);
 }
