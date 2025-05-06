@@ -5,7 +5,7 @@ MINOR_TO_KEYWORDS = {
     "Business": ["business analyst", "management", "consulting", "marketing", "finance"],
     "Business Analytics": ["data analyst", "business intelligence", "analytics", "data visualization"],
     "Biology": ["biologist", "biotechnology", "research scientist", "lab technician"],
-    "Computer Science": ["software engineer", "developer", "programmer", "cybersecurity"],
+    "Computer Science": ["healthcare"],
     "Math": ["mathematician", "quantitative analyst", "actuary", "data scientist"],
     "Data Science": ["data scientist", "machine learning", "data engineer", "AI specialist"],
     "Economics": ["economist", "financial analyst", "policy analyst", "market researcher"],
@@ -14,14 +14,11 @@ MINOR_TO_KEYWORDS = {
     "Physics": ["physicist", "research scientist", "engineer", "astrophysicist"]
 }
 
-def search_jobs(query, location="US", results_per_page=5):
-    url = "https://api.adzuna.com/v1/api/jobs/us/search/1"
+def search_jobs(query, location="gb", results_per_page=5):
+    url = "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=c4df460e&app_key=c2763dd4365fc8f82572169a86cc9f4a"
     params = {
-        "app_id": "c4df460e",
-        "app_key": "c2763dd4365fc8f82572169a86cc9f4a",
         "results_per_page": results_per_page,
         "what": query,
-        "where": location,
         "content-type": "application/json",
     }
     try:
@@ -33,7 +30,7 @@ def search_jobs(query, location="US", results_per_page=5):
         print(f"Error fetching jobs: {e}")
         return []
 
-def get_career_choices_for_major_minor(major, minor, location="US", results_per_page=5):
+def get_career_choices_for_major_minor(major, minor, location="gb", results_per_page=5):
     major_keywords = get_keywords_for_major(major)
     minor_keywords = MINOR_TO_KEYWORDS.get(minor, [])
     
@@ -60,7 +57,7 @@ def get_career_choices_for_major_minor(major, minor, location="US", results_per_
 def get_keywords_for_major(major):
     # Map majors to related keywords
     major_keywords_map = {
-        "Computer Science": ["software", "developer", "programming", "engineer"],
+        "Computer Science": ["healthcare"],
         "Biology": ["research", "biologist", "biotech", "lab", "scientist"],
         "Business": ["management", "finance", "marketing", "consulting"],
         "Business Analytics": ["data analyst", "business intelligence", "analytics"],

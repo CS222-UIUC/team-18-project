@@ -12,6 +12,8 @@ export default function Jobs() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  console.log("Jobs.tsx received state:", { major, minor });
+
   useEffect(() => {
     const fetchJobs = async () => {
       if (!major || !minor) {
