@@ -4,8 +4,8 @@ import requests
 MINOR_TO_KEYWORDS = {
     "Business": ["business analyst", "management", "consulting", "marketing", "finance"],
     "Business Analytics": ["data analyst", "business intelligence", "analytics", "data visualization"],
-    "Biology": ["biologist", "biotechnology", "research scientist", "lab technician"],
-    "Computer Science": ["healthcare"],
+    "Biology": ["healthcare"],
+    "Computer Science": ["software engineer", "developer", "programmer", "cybersecurity"],
     "Math": ["mathematician", "quantitative analyst", "actuary", "data scientist"],
     "Data Science": ["data scientist", "machine learning", "data engineer", "AI specialist"],
     "Economics": ["economist", "financial analyst", "policy analyst", "market researcher"],
@@ -58,7 +58,7 @@ def get_keywords_for_major(major):
     # Map majors to related keywords
     major_keywords_map = {
         "Computer Science": ["healthcare"],
-        "Biology": ["research", "biologist", "biotech", "lab", "scientist"],
+        "Biology": ["healthcare"],
         "Business": ["management", "finance", "marketing", "consulting"],
         "Business Analytics": ["data analyst", "business intelligence", "analytics"],
         "Math": ["mathematician", "quantitative analyst", "actuary"],
