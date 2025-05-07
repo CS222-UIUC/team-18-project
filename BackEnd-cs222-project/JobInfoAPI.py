@@ -69,7 +69,7 @@ def get_keywords_for_major(major):
         "Physics": ["physicist", "research scientist", "engineer"],
         "Aerospace Engineering": ["aerospace", "engineer", "aviation"],
         "Agricultural and Biological Engineering": ["agricultural", "bioengineering", "engineer"],
-        "Bioengineering": ["biomedical", "bioengineer", "medical device"],
+        "Bioengineering": ["healthcare"],
         "Chemical Engineering": ["chemical", "process engineer", "petrochemical"],
         "Civil Engineering": ["civil", "structural engineer", "construction"],
         "Computer Engineering": ["hardware", "embedded systems", "engineer"],
