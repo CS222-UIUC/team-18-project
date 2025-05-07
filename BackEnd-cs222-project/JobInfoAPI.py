@@ -57,7 +57,7 @@ def get_career_choices_for_major_minor(major, minor, location="gb", results_per_
 def get_keywords_for_major(major):
     # Map majors to related keywords
     major_keywords_map = {
-        "Computer Science": ["healthcare"],
+        "Computer Science": ["software", "developer", "programming", "engineer"],
         "Biology": ["healthcare"],
         "Business": ["management", "finance", "marketing", "consulting"],
         "Business Analytics": ["data analyst", "business intelligence", "analytics"],
