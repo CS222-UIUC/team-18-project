@@ -23,20 +23,31 @@ def subjectNames(request):
     gpaFile = pd.read_csv(CSV_PATH)
     return Response(gpaFile["Subject"].dropna().drop_duplicates().tolist())
 
-@api_view(["GET", "POST"])
+@api_view(["POST"])
 def job_recommendations(request):
     major = request.data.get("major", "")
     minor = request.data.get("minor", "")
+    current_keyword_index = int(request.data.get("current_keyword_index", 0))
+    current_page = int(request.data.get("current_page", 1))
     
     if not major or not minor:
-        return Response({"error": "Missing required fields: 'major' and 'minor'"}, status=400)
+        return Response({"error": "Missing required fields: 'major' and 'minor'", "jobs": []}, status=400)
     
     try:
-        jobs = get_career_choices_for_major_minor(major, minor, results_per_page=5)
-        return Response({"jobs": jobs})
+        jobs = get_career_choices_for_major_minor(
+            major=major,
+            minor=minor,
+            location="gb",
+            results_per_page=5,
+            max_pages=10,
+            jobs_per_batch=5,
+            current_keyword_index=current_keyword_index,
+            current_page=current_page
+        )
+        return Response(jobs)
     except Exception as e:
         print(f"Error fetching job recommendations: {e}")
-        return Response({"error": "Failed to fetch job recommendations"}, status=500)
+        return Response({"error": "Failed to fetch job recommendations", "jobs": []}, status=500)
     
 @api_view(["GET", "POST"])  
 def minor_progress(request):
