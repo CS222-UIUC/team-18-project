@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-function MajorDropdown({ title, options, handleSelect }) {
+function MajorDropdown({ title, options, handleSelect, className }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
