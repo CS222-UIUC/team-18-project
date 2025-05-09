@@ -32,7 +32,7 @@ import DropdownItem from "./DropdownItem.js";
 
 
 
-function Dropdown({ title , words, initial, sendDataToParent}) {
+function Dropdown({ title , words, initial, sendDataToParent, className}) {
   const [open, setOpen] = useState(false);
   const [checkedState, setChecked] = useState(initial);
   
