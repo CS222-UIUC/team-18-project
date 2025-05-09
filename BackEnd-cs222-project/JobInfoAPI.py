@@ -2,20 +2,6 @@ import math
 import time
 import requests
 
-# Minor to keyword mappings for job search
-MINOR_TO_KEYWORDS = {
-    "Business": ["business analyst", "management", "consulting", "marketing", "finance"],
-    "Business Analytics": ["data analyst", "business intelligence", "analytics", "data visualization"],
-    "Biology": ["biologist", "biotechnology", "research scientist", "lab technician"],
-    "Computer Science": ["software engineer", "developer", "programmer", "cybersecurity"],
-    "Math": ["mathematician", "quantitative analyst", "actuary", "data scientist"],
-    "Data Science": ["data scientist", "machine learning", "data engineer", "AI specialist"],
-    "Economics": ["economist", "financial analyst", "policy analyst", "market researcher"],
-    "Statistics": ["statistician", "data analyst", "quantitative researcher", "biostatistician"],
-    "Spanish": ["translator", "interpreter", "language teacher", "international relations"],
-    "Physics": ["physicist", "research scientist", "engineer", "astrophysicist"]
-}
-
 def search_jobs(keyword, location="gb", results_per_page=5, max_pages=10, start_page=1):
     base_url = f"https://api.adzuna.com/v1/api/jobs/{location}/search"
     params = {
@@ -64,8 +50,8 @@ def search_jobs(keyword, location="gb", results_per_page=5, max_pages=10, start_
     return jobs, next_page, total_pages
 
 def get_career_choices_for_major_minor(major, minor, location="gb", results_per_page=5, max_pages=10, jobs_per_batch=5, current_keyword_index=0, current_page=1):
-    major_keywords = get_keywords_for_major(major)
-    minor_keywords = MINOR_TO_KEYWORDS.get(minor, [])
+    major_keywords = get_keywords(major)
+    minor_keywords = get_keywords(minor)
     
     all_keywords = list(set(minor_keywords + major_keywords))
     if not all_keywords:
@@ -109,6 +95,8 @@ def get_career_choices_for_major_minor(major, minor, location="gb", results_per_
 
     has_more = keyword_index < len(all_keywords) or (page is not None and page <= max_pages)
 
+    jobs.sort(key=lambda job: keyword_score(job, all_keywords), reverse=True)
+    
     return {
         "jobs": jobs,
         "next_keyword_index": keyword_index if has_more else None,
@@ -117,9 +105,9 @@ def get_career_choices_for_major_minor(major, minor, location="gb", results_per_
         "total_keywords": len(all_keywords)
     }
 
-def get_keywords_for_major(major):
+def get_keywords(field):
     # Map majors to related keywords
-    major_keywords_map = {
+    keywords_map = {
         "Computer Science": ["software", "developer", "programming", "engineer"],
         "Biology": ["research", "biologist", "biotech", "lab", "scientist"],
         "Business": ["management", "finance", "marketing", "consulting"],
@@ -147,17 +135,8 @@ def get_keywords_for_major(major):
         "Engineering Undeclared": ["engineer", "general engineering"]
     }
     
-    return major_keywords_map.get(major, [])  # Return empty list if major not found
+    return keywords_map.get(field, [])  # Return empty list if field not found
 
-# Example usage
-if __name__ == "__main__":
-    major = "Computer Science"
-    minor = "Data Science"
-    career_choices = get_career_choices_for_major_minor(major, minor)
-    for job in career_choices:
-        print(f"Title: {job['title']}")
-        print(f"Location: {job['location']}")
-        print(f"Company: {job['company']}")
-        print(f"Description: {job['description'][:100]}...")  # Truncate for brevity
-        print(f"URL: {job['url']}")
-        print("-" * 50)
+def keyword_score(job, keywords):
+    content = (job.get("title", "") + job.get("description", "")).lower()
+    return sum(kw.lower() in content for kw in keywords)

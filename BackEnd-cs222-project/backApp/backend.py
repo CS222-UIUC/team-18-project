@@ -312,6 +312,8 @@ def minor_progress(request):
         if credit_hours[minor] > 0:  # Avoid division by zero
             percentage_complete[minor] = 100 * (current_credit[minor] / credit_hours[minor])
 
+    #sorting based on highest completion rate
+    percentage_complete = dict(sorted(percentage_complete.items(), key=lambda item: item[1], reverse=True))
     return Response({
         "percentages": percentage_complete,
     })
