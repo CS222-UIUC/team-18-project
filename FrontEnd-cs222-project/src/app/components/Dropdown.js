@@ -1,5 +1,5 @@
 "use client"
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 // import Image from "next/image";
 //import CheckBox from "./CheckBox.js";
 import DropdownItem from "./DropdownItem.js";
@@ -35,17 +35,30 @@ import DropdownItem from "./DropdownItem.js";
 function Dropdown({ title , words, initial, sendDataToParent}) {
   const [open, setOpen] = useState(false);
   const [checkedState, setChecked] = useState(initial);
-  
+  const dropdownRef = useRef(null);
   //setChecked(initial);
+useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   useEffect(() => {
     setOpen(false);
     setChecked(initial);
   }, []);
 
-  if (open && initial != checkedState) {
-    setChecked(initial);
-  }
+  useEffect(() => {
+    if (open && initial !== checkedState) {
+      setChecked(initial);
+    }
+  }, [open, initial]);
   
   //const [checkedState, setChecked] = useState(initial);
   //const [start, setStart] = useState(true);
@@ -84,11 +97,10 @@ function Dropdown({ title , words, initial, sendDataToParent}) {
   // );
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ position: "relative", display: "inline-block", width: "250px" }}>
+      <div ref={dropdownRef} style={{ position: "relative", display: "inline-block", width: "250px" }}>
         <span
           onClick={handleClick}
           style={{
-            color: "black",
             display: "flex",
             alignItems: "center",
             padding: "10px 20px",
@@ -99,7 +111,6 @@ function Dropdown({ title , words, initial, sendDataToParent}) {
             color: "white",
             fontSize: "16px",
             fontWeight: "bold",
-            transition: "background-color 0.3s ease, transform 0.2s ease",
           }}
         >
           {title}
@@ -122,10 +133,10 @@ function Dropdown({ title , words, initial, sendDataToParent}) {
             }}
           >
             {words.map((word, index) => (
-              <li key={index} style={{ margin: "0",}}>
-                <DropdownItem 
-                  word={word} 
-                  isChecked = {checkedState[index]}
+              <li key={index}>
+                <DropdownItem
+                  word={word}
+                  isChecked={checkedState[index]}
                   onToggle={() => toggleCheck(index)}
                 />
               </li>
@@ -133,7 +144,6 @@ function Dropdown({ title , words, initial, sendDataToParent}) {
           </ul>
         )}
       </div>
-
     </div>
   );
 }
