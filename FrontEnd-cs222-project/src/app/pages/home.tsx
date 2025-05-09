@@ -128,16 +128,12 @@ export default function Home() {
   };
 
 
-  const handleDataFromChildMajors = (childData : Array<boolean>) => {
-    setMajorData(childData);
-    const selectedIndex = childData.indexOf(true); // Define selectedIndex here
-    setSelectedMajor(selectedIndex >= 0 ? majors[selectedIndex] : "");
-    console.log("Selected major:", selectedIndex >= 0 ? majors[selectedIndex] : "None"); // Debug log
-    for (let i = 0; i < childData.length; ++i) {
-      if (childData[i]) {
-        console.log(majors[i]);
-      } 
-    }
+  const handleDataFromChildMajors = (selectedMajor: string) => {
+    setSelectedMajor(selectedMajor);
+    setMajorData(
+      majors.map((major) => major === selectedMajor) // creates the expected boolean array
+    );
+    console.log("Selected major:", selectedMajor);
   };
 
   const goToSecondaryPage = async () => {
