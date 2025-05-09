@@ -25,7 +25,7 @@ interface JobResponse {
 export default function Jobs() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { major, minor } = location.state || { major: "", minor: "" };
+  const { major, minor, minorDataStored } = location.state || { major: "", minor: "", minorDataStored: { percentages: {}, top_minors: [] }};
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -102,7 +102,7 @@ export default function Jobs() {
   }, []);
 
   const goToSecondaryPage = () => {
-    navigate('/secondary', { state: location.state });
+    navigate('/secondary', { state: {minorData: minorDataStored, selectedMajor: major} });
   };
 
   if (error) {

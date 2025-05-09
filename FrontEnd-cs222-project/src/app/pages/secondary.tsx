@@ -30,7 +30,7 @@ export default function Secondary({ refresh = 0 }) {
       console.error("No major selected. Navigation aborted.");
       return;
     }
-    navigate('/jobs', { state: { major: selectedMajor, minor } });
+    navigate('/jobs', { state: { major: selectedMajor, minor, minorDataStored: minorData } });
   };
 
   return (
