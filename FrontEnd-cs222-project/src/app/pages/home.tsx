@@ -298,7 +298,6 @@ export default function Home() {
 // }
 return (
   <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
-
     <div className="flex gap-6"> 
 
       {/* === MAIN WHITE BUBBLE === */}
@@ -319,26 +318,25 @@ return (
           </div>
 
           {/* Major Selection */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
-              <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+          <div className="space-y-2">
+            <h2 className="text-lg font-medium text-[#13294B] flex items-center gap-2">
+              <span className="bg-[#13294B] text-white p-1.5 rounded-full w-6 h-6 flex items-center justify-center text-sm">
                 1
               </span>
               <span>Major</span>
             </h2>
-            <Dropdown 
-              title="Select Your Major" 
-              words={majors}
-              sendDataToParent={handleDataFromChildMajors}
-              className="border-2 border-[#E84A27]/30 hover:border-[#13294B] transition-colors p-4 rounded-xl"
-              initial={majorData}
+            <MajorDropdown
+              title="Select Your Major"
+              options={majors}
+              handleSelect={handleDataFromChildMajors}
+              className="border border-[#E84A27]/20 hover:border-[#13294B] transition-colors p-3 rounded-lg text-sm"
             />
           </div>
 
           {/* Course Selection */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
-              <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+          <div className="space-y-2">
+            <h2 className="text-lg font-medium text-[#13294B] flex items-center gap-2">
+              <span className="bg-[#13294B] text-white p-1.5 rounded-full w-6 h-6 flex items-center justify-center text-sm">
                 2
               </span>
               <span>Subjects</span>
@@ -347,14 +345,14 @@ return (
               title="Select Your Subjects"
               options={subjects}
               handleSelect={handleSelect}
-              className="border-2 border-[#E84A27]/30 hover:border-[#13294B] transition-colors p-4 rounded-xl"
+              className="border border-[#E84A27]/20 hover:border-[#13294B] transition-colors p-3 rounded-lg text-sm"
             />
           </div>
 
-          {/* Completed Classes */}
-          <div className="space-y-4 ml-0" style={{ position: "relative", display: "inline-block", width: "100%" }}>
-            <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
-              <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+          {/* Completed Courses */}
+          <div className="space-y-2">
+            <h2 className="text-lg font-medium text-[#13294B] flex items-center gap-2">
+              <span className="bg-[#13294B] text-white p-1.5 rounded-full w-6 h-6 flex items-center justify-center text-sm">
                 3
               </span>
               <span>Completed Courses</span>
@@ -364,8 +362,30 @@ return (
               words={currentClasses}
               initial={selectedCurrentClasses}
               sendDataToParent={handleDataFromChildClasses}
-              className="border-2 border-[#E84A27]/30 hover:border-[#13294B] transition-colors p-4 rounded-xl"
+              className="border border-[#E84A27]/20 hover:border-[#13294B] transition-colors p-3 rounded-lg text-sm"
             />
+          </div>
+
+
+          {/* Selected Courses (Moved inside main bubble) */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-[#13294B] flex items-center gap-3">
+              <span className="bg-[#13294B] text-white p-2 rounded-full w-8 h-8 flex items-center justify-center">
+                📘
+              </span>
+              <span>Selected Courses</span>
+            </h2>
+            <div className="bg-[#F9FAFB] border-2 border-[#E84A27]/30 rounded-xl p-4">
+              {classes.filter((_, i) => classesData[i]).length > 0 ? (
+                <ul className="list-disc list-inside text-gray-700 space-y-1 text-lg">
+                  {classes.map((course, i) =>
+                    classesData[i] ? <li key={i}>{course}</li> : null
+                  )}
+                </ul>
+              ) : (
+                <p className="text-gray-500 italic text-sm">No courses selected yet.</p>
+              )}
+            </div>
           </div>
 
           {/* Continue Button */}
@@ -381,21 +401,8 @@ return (
         </div>
       </div>
 
-      
-      <div className="bg-white rounded-3xl shadow-xl p-6 w-80 h-fit self-start">
-        <h2 className="text-3xl font-semibold text-[#13294B] mb-4">Selected Courses</h2>
-        {classes.filter((_, i) => classesData[i]).length > 0 ? (
-          <ul className="list-disc list-inside text-gray-700 space-y-1 text-lg">
-            {classes.map((course, i) =>
-              classesData[i] ? <li key={i}>{course}</li> : null
-            )}
-          </ul>
-        ) : (
-          <p className="text-gray-700 italic text-sm">No courses selected yet.</p>
-        )}
-      </div>
-
     </div> 
   </div>
 );
+
 }

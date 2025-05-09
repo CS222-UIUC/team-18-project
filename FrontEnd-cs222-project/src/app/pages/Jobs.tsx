@@ -137,75 +137,80 @@ export default function Jobs() {
   }
 
   return (
-    <div style={{ color: 'black' }}>
-      <Title />
-      <Subtitle string={`Job Recommendations for ${major} Major with ${minor} Minor`} />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', margin: '20px auto', width: '80%' }}>
-        {jobs.length === 0 && !isLoading ? (
-          <p>No job recommendations found. Try a different major or minor combination.</p>
-        ) : (
-          jobs.map((job: Job, index: number) => {
-            const isLastElement = index === jobs.length - 1;
-            return (
-              <div
-                key={`${job.url}-${index}`}
-                ref={isLastElement ? lastJobElementRef : null}
-                style={{
-                  border: '1px solid #ccc',
-                  borderRadius: '8px',
-                  padding: '16px',
-                  backgroundColor: '#f9f9f9',
-                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
-                }}
-              >
-                <h3 style={{ margin: '0 0 8px', fontSize: '20px', color: '#333' }}>{job.title}</h3>
-                <p style={{ margin: '4px 0', color: '#555' }}><strong>Company:</strong> {job.company}</p>
-                <p style={{ margin: '4px 0', color: '#555' }}><strong>Location:</strong> {job.location}</p>
-                <p style={{ margin: '4px 0', color: '#555' }}><strong>Description:</strong> {job.description.substring(0, 200)}...</p>
-                <a
-                  href={job.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: '#E84A27',
-                    textDecoration: 'none',
-                    fontWeight: '500',
-                    marginTop: '8px',
-                    display: 'inline-block',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
-                >
-                  View Job
-                </a>
+    <div className="min-h-screen bg-gradient-to-br from-[#13294B]/5 via-white to-[#E84A27]/5 p-8">
+      <div className="flex gap-6">
+        {/* === MAIN WHITE BUBBLE === */}
+        <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl relative overflow-visible p-8 flex-1">
+          <div className="bg-gradient-to-r from-[#13294B] to-[#E84A27] h-2 w-full"></div>
+  
+          <div className="p-10 space-y-10">
+            {/* Header */}
+            <div className="text-center space-y-3 mb-8">
+              <div className="inline-block bg-[#13294B]/10 px-6 py-3 rounded-full">
+                <h1 className="text-3xl font-bold text-[#13294B]">
+                  Job Recommendations
+                </h1>
               </div>
-            );
-          })
-        )}
-        {isLoading && <p>Loading more jobs...</p>}
-        {!hasMore && jobs.length > 0 && <p>No more jobs to load.</p>}
+              <p className="text-lg text-[#E84A27] font-medium">
+                For {major} Major with {minor} Minor
+              </p>
+            </div>
+  
+            {/* Jobs List */}
+            <div className="space-y-6">
+              {jobs.length === 0 && !isLoading ? (
+                <p className="text-center text-gray-600 text-base">
+                  No job recommendations found. Try a different major or minor combination.
+                </p>
+              ) : (
+                jobs.map((job: Job, index: number) => {
+                  const isLastElement = index === jobs.length - 1;
+                  return (
+                    <div
+                      key={`${job.url}-${index}`}
+                      ref={isLastElement ? lastJobElementRef : null}
+                      className="bg-[#F9FAFB] border-2 border-[#E84A27]/30 rounded-xl p-6 shadow-md"
+                    >
+                      <h3 className="text-xl font-semibold text-[#13294B] mb-2">{job.title}</h3>
+                      <p className="text-gray-700"><strong>Company:</strong> {job.company}</p>
+                      <p className="text-gray-700"><strong>Location:</strong> {job.location}</p>
+                      <p className="text-gray-700"><strong>Description:</strong> {job.description.substring(0, 200)}...</p>
+                      <a
+                        href={job.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#E84A27] font-medium mt-4 inline-block hover:underline"
+                      >
+                        View Job
+                      </a>
+                    </div>
+                  );
+                })
+              )}
+  
+              {/* Loading & No More Jobs */}
+              {isLoading && (
+                <p className="text-center text-gray-500 italic">Loading more jobs...</p>
+              )}
+              {!hasMore && jobs.length > 0 && (
+                <p className="text-center text-gray-500 italic">No more jobs to load.</p>
+              )}
+            </div>
+  
+            {/* Back Button */}
+            <button
+              onClick={goToSecondaryPage}
+              className="mt-12 w-full max-w-xs mx-auto py-4 px-6 bg-gradient-to-r from-[#E84A27] to-[#13294B] text-white font-semibold rounded-xl hover:shadow-xl hover:brightness-110 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center space-x-2"
+            >
+              <span>Back to Minors</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 111.414 1.414L4.414 9H17a1 1 0 110 2H4.414l5.293 5.293a1 1 0 010 1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
-      <button
-        onClick={goToSecondaryPage}
-        style={{
-          color: 'white',
-          backgroundColor: '#E84A27',
-          padding: '12px 24px',
-          border: 'none',
-          borderRadius: '10px',
-          marginTop: '20px',
-          marginLeft: '10px',
-          cursor: 'pointer',
-          fontSize: '16px',
-          fontWeight: '500',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          transition: 'background-color 0.3s ease',
-        }}
-        onMouseEnter={(e) => ((e.target as HTMLElement).style.backgroundColor = '#13294B')}
-        onMouseLeave={(e) => ((e.target as HTMLElement).style.backgroundColor = '#E84A27')}
-      >
-        Back to Minors
-      </button>
     </div>
   );
+  
 }
