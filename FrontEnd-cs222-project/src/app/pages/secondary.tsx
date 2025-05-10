@@ -9,8 +9,17 @@ export default function Secondary({ refresh = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  
+
+  
+
+  // Extract both minorData and selectedMajor from location.state
+  const { minorData = { percentages: {}, top_minors: [] }, selectedMajor = "", storedSubject = "" } = location.state || {};
+  const percentages = Object.values(minorData.percentages);
+  const minors = Object.keys(minorData.percentages);
+
   const goToHomePage = () => {
-    navigate('/');
+    navigate('/', { state: { storedMajor : selectedMajor, storedSubject: storedSubject}});
   };
 
   useEffect(() => {
@@ -19,18 +28,13 @@ export default function Secondary({ refresh = 0 }) {
     }
   }, [refresh, goToHomePage]);
 
-  // Extract both minorData and selectedMajor from location.state
-  const { minorData = { percentages: {}, top_minors: [] }, selectedMajor = "" } = location.state || {};
-  const percentages = Object.values(minorData.percentages);
-  const minors = Object.keys(minorData.percentages);
-
   const handleMinorClick = (minor: string) => {
     console.log(`Clicked on minor: ${minor}, selectedMajor: ${selectedMajor}`);
     if (!selectedMajor) {
       console.error("No major selected. Navigation aborted.");
       return;
     }
-    navigate('/jobs', { state: { major: selectedMajor, minor, minorDataStored: minorData } });
+    navigate('/jobs', { state: { major: selectedMajor, minor, minorDataStored: minorData, storedSubject: storedSubject} });
   };
 
   return (

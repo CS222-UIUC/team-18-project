@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 
-function MajorDropdown({ title, options, handleSelect, className }) {
+function MajorDropdown({ title, options, handleSelect, initSelected = "", className }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const dropdownRef = useRef(null);
@@ -19,6 +19,10 @@ function MajorDropdown({ title, options, handleSelect, className }) {
         setOpen(false);
       }
     };
+
+    setSelected(initSelected);
+    handleSelect(initSelected);
+    console.log("Initial Selected:", initSelected);
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);

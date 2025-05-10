@@ -3,17 +3,19 @@ import Title from "../components/Title.js";
 import Dropdown from "../components/Dropdown.js";
 import Subtitle from '../components/subtitle2.js';
 import React, { useState, useEffect } from 'react'; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MajorDropdown from '../components/majorDropdown.js';
 
 export default function Home() {
+  const location = useLocation();
   const majors = ['Aerospace Engineering', 'Agricultural and Biological Engineering', 'Bioengineering', 'Chemical Engineering', 'Civil Engineering', 'Computer Engineering', 'Computer Science', 'Electrical Engineering', 'Engineering Mechanics', 'Engineering Physics', 'Industrial Engineering', 'Materials Science and Engineering', 'Mechanical Engineering', 'Nuclear, Plasma, and Radiological Engineering', 'Systems Engineering and Design', 'Engineering Undeclared'];
+  const { storedMajor, storedSubject } = location.state || { storedMajor: "", storedSubject: ""};
   const [classes, setClasses] = useState<string[]>([]);
   const [subjects, setSubjects] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [majorData, setMajorData] = useState<boolean[]>([]);
   const [selectedMajor, setSelectedMajor] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState<string | "">("");
   const [classesData, setClassesData] = useState<boolean[]>([]);
   const [currentClasses, setCurrentClasses] = useState<string[]>([]);
   const [selectedCurrentClasses, setSelectedCurrentClasses] = useState<boolean[]>([]);
@@ -73,7 +75,15 @@ export default function Home() {
     };
     fetchClasses();
     fetchSubjects();
-    setMajorData(Array(majors.length).fill(false));
+    //setMajorData(Array(majors.length).fill(false));
+    setSelectedMajor(storedMajor);
+    setMajorData(
+      majors.map((major) => major === storedMajor) // creates the expected boolean array
+    );
+
+    setSelectedSubject(storedSubject);
+
+    //console.log("Stored Major:", storedMajor);
   }, []);
 
   const handleSelect = (subject: string) => {
@@ -185,7 +195,7 @@ export default function Home() {
       const data = await response.json();
       console.log("Minor progress data:", data);
 
-      navigate('/secondary', { state: { minorData: data, selectedMajor: to_include_majors[0] } });
+      navigate('/secondary', { state: { minorData: data, selectedMajor: to_include_majors[0], storedSubject: selectedSubject } });
     } catch (error) {
       console.error('Error fetching minor progress:', error);
       alert("Failed to fetch minor progress data. Please try again.");
@@ -324,6 +334,7 @@ return (
             <MajorDropdown
               title="Select Your Major"
               options={majors}
+              initSelected={selectedMajor}
               handleSelect={handleDataFromChildMajors}
               className="border border-[#E84A27]/20 hover:border-[#13294B] transition-colors p-3 rounded-lg text-sm"
             />
@@ -340,6 +351,7 @@ return (
             <MajorDropdown
               title="Select Your Subjects"
               options={subjects}
+              initSelected={selectedSubject}
               handleSelect={handleSelect}
               className="border border-[#E84A27]/20 hover:border-[#13294B] transition-colors p-3 rounded-lg text-sm"
             />
