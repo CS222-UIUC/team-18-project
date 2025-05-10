@@ -14,12 +14,12 @@ export default function Secondary({ refresh = 0 }) {
   
 
   // Extract both minorData and selectedMajor from location.state
-  const { minorData = { percentages: {}, top_minors: [] }, selectedMajor = "", storedSubject = "" } = location.state || {};
+  const { minorData = { percentages: {}, top_minors: [] }, selectedMajor = "", storedSubject = "", storedClassesData = [], storedCurrentClasses = [], storedSelectedClasses = [], storedOffset = null, storedEndOffset = null  } = location.state || {};
   const percentages = Object.values(minorData.percentages);
   const minors = Object.keys(minorData.percentages);
 
   const goToHomePage = () => {
-    navigate('/', { state: { storedMajor : selectedMajor, storedSubject: storedSubject}});
+    navigate('/', { state: { storedMajor : selectedMajor, storedSubject: storedSubject, storedClassesData: storedClassesData, storedCurrentClasses: storedCurrentClasses, storedSelectedClasses: storedSelectedClasses, storedOffset: storedOffset, storedEndOffset: storedEndOffset}});
   };
 
   useEffect(() => {

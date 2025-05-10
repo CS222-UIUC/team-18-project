@@ -9,7 +9,7 @@ import MajorDropdown from '../components/majorDropdown.js';
 export default function Home() {
   const location = useLocation();
   const majors = ['Aerospace Engineering', 'Agricultural and Biological Engineering', 'Bioengineering', 'Chemical Engineering', 'Civil Engineering', 'Computer Engineering', 'Computer Science', 'Electrical Engineering', 'Engineering Mechanics', 'Engineering Physics', 'Industrial Engineering', 'Materials Science and Engineering', 'Mechanical Engineering', 'Nuclear, Plasma, and Radiological Engineering', 'Systems Engineering and Design', 'Engineering Undeclared'];
-  const { storedMajor, storedSubject } = location.state || { storedMajor: "", storedSubject: ""};
+  const { storedMajor,  } = location.state || { storedMajor: ""};
   const [classes, setClasses] = useState<string[]>([]);
   const [subjects, setSubjects] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,14 +76,13 @@ export default function Home() {
     fetchClasses();
     fetchSubjects();
     //setMajorData(Array(majors.length).fill(false));
+    
     setSelectedMajor(storedMajor);
     setMajorData(
       majors.map((major) => major === storedMajor) // creates the expected boolean array
     );
 
-    setSelectedSubject(storedSubject);
 
-    //console.log("Stored Major:", storedMajor);
   }, []);
 
   const handleSelect = (subject: string) => {
@@ -195,7 +194,7 @@ export default function Home() {
       const data = await response.json();
       console.log("Minor progress data:", data);
 
-      navigate('/secondary', { state: { minorData: data, selectedMajor: to_include_majors[0], storedSubject: selectedSubject } });
+      navigate('/secondary', { state: { minorData: data, selectedMajor: to_include_majors[0]} });
     } catch (error) {
       console.error('Error fetching minor progress:', error);
       alert("Failed to fetch minor progress data. Please try again.");
