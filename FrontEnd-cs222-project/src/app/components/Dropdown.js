@@ -54,11 +54,15 @@ useEffect(() => {
     setChecked(initial);
   }, []);
 
-  useEffect(() => {
-    if (open && initial !== checkedState) {
-      setChecked(initial);
-    }
-  }, [open, initial]);
+  //useEffect(() => {
+  //  if (open && initial !== checkedState) {
+ //     setChecked(initial);
+ //   }
+  //}, [open, initial]);
+
+  if (open && initial !== checkedState) {
+    setChecked(initial);
+  }
   
   //const [checkedState, setChecked] = useState(initial);
   //const [start, setStart] = useState(true);
