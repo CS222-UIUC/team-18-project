@@ -38,7 +38,7 @@ npm run dev
 
 ---
 
-## 🧩 Tech Stack
+## 🧩 Technical Architecture
 
 ```txt
 Frontend: React, Next.js, TailwindCSS  
@@ -52,5 +52,6 @@ Extras: Axios, shadcn/ui, Vite (optional)
 ## 📬 Contact
 
 ```txt
-Have feedback or want to build on it? Feel free to reach out to ___!
+This project was built by Nathan Mcelroy (Frontend), Saumya Agarwal (Frontend), Vaani Rometra (Backend), and Divya Thumu (Backend). 
+Have feedback or want to build on it? Feel free to reach out to us at saumyaa4@illinois.edu!
 ```
