@@ -22,14 +22,14 @@ Clone the repo, then run both the **backend** and **frontend** to get going!
 ### 1️⃣ Backend (Django - Python)
 
 ```bash
-cd backend
+cd BackEnd-cs222-project
 python manage.py runserver
 ````
 
 ### 2️⃣ Frontend (Next.js / React)
 
 ```bash
-cd frontend
+cd FrontEnd-cs222-project
 npm install
 npm run dev
 ```
