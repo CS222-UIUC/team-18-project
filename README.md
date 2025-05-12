@@ -40,6 +40,8 @@ npm run dev
 
 ## 🧩 Technical Architecture
 
+<img src="diagram-image\Minor Recommender Architecture Diagram (1).png" alt="Architecture Diagram" width="960" height="720">
+
 ```txt
 Frontend: React, Next.js, TailwindCSS  
 Backend: Django (Python), Django REST Framework  
