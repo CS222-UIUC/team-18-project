@@ -10,7 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/html2canvas": "^0.5.35",
     "express": "^5.1.0",
+    "html2canvas-pro": "^1.5.11",
+    "html2pdf.js": "^0.10.3",
+    "jspdf": "^3.0.1",
     "next": "^15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
